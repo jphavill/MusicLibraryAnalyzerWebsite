@@ -5,4 +5,6 @@
   <input #uploadFile (change)="loadSongs($event)" type='file' style="display:none"/>
 </div>
 
+<div *ngIf="dateFlag">{{ releaseDate }}</div>
+
 <router-outlet></router-outlet>

@@ -9,7 +9,9 @@ import * as plist from 'plist';
   styleUrls: ['./app.component.sass']
 })
 export class AppComponent {
-  title = 'Interview Example';
+  title:string = 'Interview Example';
+  releaseDate: Date = new Date(0);
+  dateFlag: boolean = false;
 
   loadSongs(e:Event){
     var fr:FileReader = new FileReader();
@@ -19,7 +21,7 @@ export class AppComponent {
       var file:File = event.files![0]; // gets the first file selected
 
       fr.readAsText(file)
-      fr.onload = function() {
+      fr.onload = () => {
         if (fr.result != null){
           var contents:string = fr.result as string // reads in the file as text first
           console.log(contents);
@@ -29,6 +31,8 @@ export class AppComponent {
           Object.keys(tracks.Tracks).forEach( (key:string) => {
             let track:Track = tracks.Tracks[key]
             console.log(track["Release Date"])
+            this.releaseDate = track["Release Date"]
+            this.dateFlag = true;
           });
         }
       }
