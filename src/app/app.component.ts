@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import type { Songs, Song } from 'models/song.model';
+import type { Tracks, Track} from 'models/library.model';
+import * as plist from 'plist';
 
 @Component({
   selector: 'app-root',
@@ -21,9 +23,12 @@ export class AppComponent {
         if (fr.result != null){
           var contents:string = fr.result as string // reads in the file as text first
           console.log(contents);
-          var songs:Songs = JSON.parse(contents);
-          songs.Songs.forEach( (song:Song) => {
-            console.log(song.artist)
+          var obj:string = plist.parse(contents) as string;
+          var tracks:Tracks = JSON.parse(JSON.stringify(obj));
+          console.log(JSON.stringify(obj))
+          Object.keys(tracks.Tracks).forEach( (key:string) => {
+            let track:Track = tracks.Tracks[key]
+            console.log(track["Release Date"])
           });
         }
       }
