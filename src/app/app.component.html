@@ -1,10 +1,11 @@
 <h1 class="md-display1">{{title}}</h1>
+<app-song-data-picker></app-song-data-picker>
 
-<div class="reddiv" (click)="uploadFile.click()">
-  <button mat-raised-button color="primary">Choose File</button>
-  <input #uploadFile (change)="loadSongs($event)" type='file' style="display:none"/>
-</div>
 
-<div *ngIf="dateFlag">{{ releaseDate }}</div>
+<!-- <div *ngIf="releaseDates.length > 0">
+  <mat-list>
+    <mat-list-item *ngFor="let date of releaseDates"> {{ date }}</mat-list-item>
+  </mat-list>
+</div> -->
 
 <router-outlet></router-outlet>

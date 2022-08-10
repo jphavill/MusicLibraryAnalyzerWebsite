@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
-import type { Songs, Song } from 'models/song.model';
-import type { Tracks, Track} from 'models/library.model';
-import * as plist from 'plist';
+
 
 @Component({
   selector: 'app-root',
@@ -10,33 +8,9 @@ import * as plist from 'plist';
 })
 export class AppComponent {
   title:string = 'Interview Example';
-  releaseDate: Date = new Date(0);
-  dateFlag: boolean = false;
 
-  loadSongs(e:Event){
-    var fr:FileReader = new FileReader();
-    var event:HTMLInputElement = (e.target as HTMLInputElement)
+  loadSongs(){
 
-    if (event != null){
-      var file:File = event.files![0]; // gets the first file selected
-
-      fr.readAsText(file)
-      fr.onload = () => {
-        if (fr.result != null){
-          var contents:string = fr.result as string // reads in the file as text first
-          console.log(contents);
-          var obj:string = plist.parse(contents) as string;
-          var tracks:Tracks = JSON.parse(JSON.stringify(obj));
-          console.log(JSON.stringify(obj))
-          Object.keys(tracks.Tracks).forEach( (key:string) => {
-            let track:Track = tracks.Tracks[key]
-            console.log(track["Release Date"])
-            this.releaseDate = track["Release Date"]
-            this.dateFlag = true;
-          });
-        }
-      }
-      };
   }
 }
 

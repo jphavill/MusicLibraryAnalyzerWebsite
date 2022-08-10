@@ -1,0 +1,4 @@
+<div class="reddiv" (click)="uploadFile.click()">
+  <button mat-raised-button color="primary">Choose File</button>
+  <input #uploadFile (change)="loadSongs($event)" type='file' style="display:none"/>
+</div>
