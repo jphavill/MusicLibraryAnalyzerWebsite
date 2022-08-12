@@ -7,11 +7,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.sass']
 })
 export class AppComponent {
-  title:string = 'Interview Example';
+  title:string = 'Library Meta Analysis';
 
-  loadSongs(){
-
-  }
 }
 
 
