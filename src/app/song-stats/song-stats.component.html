@@ -1,1 +1,9 @@
-<p>song-stats works!</p>
+<div *ngIf="library.length == 0">
+  <mat-spinner></mat-spinner>
+</div>
+
+<div *ngIf="library">
+  <mat-list>
+    <mat-list-item *ngFor="let track of library"> {{ track.artistName }} {{ track.trackName }}</mat-list-item>
+  </mat-list>
+</div>

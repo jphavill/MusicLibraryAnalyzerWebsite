@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Tracks, Track} from 'models/library.model';
+import {Track} from 'models/library.model';
+
+import { SongStatsService } from 'app/song-stats-service';
 
 @Component({
   selector: 'app-song-data-picker',
@@ -10,16 +12,16 @@ import { Tracks, Track} from 'models/library.model';
 export class SongDataPickerComponent implements OnInit {
   loading:boolean = false;
   libraryLoaded:boolean = false;
-  library: Track[] = []
-  constructor() { }
+  constructor(private songStatsService: SongStatsService) { }
 
   ngOnInit(): void {
   }
 
   uploadSongs(e:Event){
-    this.loading = true
+    console.log("cleraing songs")
+    this.updateSongs(Array())
     this.libraryLoaded = false
-    this.loadSongs(e).then((library:Track[]) => this.displaySongs(library))
+    this.loadSongs(e).then((library:Track[]) => this.updateSongs(library))
   }
 
   async loadSongs(e:Event): Promise<Track[]>{
@@ -29,8 +31,9 @@ export class SongDataPickerComponent implements OnInit {
     return library;
   }
 
-  displaySongs(library: Track[]){
-    this.library = library
+  updateSongs(library: Track[]){
+
+    this.songStatsService.sendLibrary(library)
     this.loading = false
     this.libraryLoaded = true
   }

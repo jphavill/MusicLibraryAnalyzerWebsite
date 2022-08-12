@@ -2,13 +2,3 @@
   <button mat-raised-button color="primary">Choose File</button>
   <input #uploadFile (change)="uploadSongs($event)" type='file' style="display:none"/>
 </div>
-
-<div *ngIf="loading">
-  <mat-spinner></mat-spinner>
-</div>
-
-<div *ngIf="libraryLoaded">
-  <mat-list>
-    <mat-list-item *ngFor="let track of library"> {{ track.artistName }} {{ track.trackName }}</mat-list-item>
-  </mat-list>
-</div>
