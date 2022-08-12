@@ -11,6 +11,7 @@ export class SongStatsComponent implements OnInit {
   loading:boolean = false;
   libraryLoaded:boolean = false;
   library: Track[] = Array();
+  displayedColumns: string[] = ['Artist Name', 'Track Name'];
 
   constructor(private songStatsService: SongStatsService) { }
 

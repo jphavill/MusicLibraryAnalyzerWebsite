@@ -18,7 +18,6 @@ export class SongDataPickerComponent implements OnInit {
   }
 
   uploadSongs(e:Event){
-    console.log("cleraing songs")
     this.updateSongs(Array())
     this.libraryLoaded = false
     this.loadSongs(e).then((library:Track[]) => this.updateSongs(library))
