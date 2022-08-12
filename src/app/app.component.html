@@ -1,11 +1,6 @@
-<h1 class="md-display1">{{title}}</h1>
-<app-song-data-picker></app-song-data-picker>
+<main>
+  <h1 class="md-display1">{{title}}</h1>
+  <app-song-data-picker></app-song-data-picker>
+  <router-outlet></router-outlet>
+</main>
 
-
-<!-- <div *ngIf="releaseDates.length > 0">
-  <mat-list>
-    <mat-list-item *ngFor="let date of releaseDates"> {{ date }}</mat-list-item>
-  </mat-list>
-</div> -->
-
-<router-outlet></router-outlet>

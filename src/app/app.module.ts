@@ -12,6 +12,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatListModule} from '@angular/material/list';
 import { SongDataPickerComponent } from './song-data-picker/song-data-picker.component';
 import { SongStatsComponent } from './song-stats/song-stats.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { SongStatsComponent } from './song-stats/song-stats.component';
     MatSliderModule,
     MatButtonModule,
     MatListModule,
+    MatProgressSpinnerModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
