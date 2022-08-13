@@ -41,6 +41,13 @@ export class SongStatsService {
     let totalTime: number = 0;
     let totalSkips: number = 0;
     let totalPlays: number = library.length;
+    let firstDate: Date = new Date();
+    let lastDate: Date = new Date();
+    if (library.length > 0){
+      firstDate = library[0].endTime;
+      lastDate = library[library.length-1].endTime;
+    }
+
     library.forEach(track => {
       totalTime = totalTime + track.msPlayed;
       // if the track was played for less than 5 seconds it is considered skipped
@@ -54,6 +61,8 @@ export class SongStatsService {
       "totalSkips": totalSkips,
       "averageSkips": 0,
       "stdSkips": 0,
+      "firstDate": firstDate,
+      "lastDate": lastDate,
     }))
     return library;
   }

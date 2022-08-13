@@ -14,7 +14,7 @@ export class SongStatsComponent implements OnInit {
   library: Track[] = Array();
   libraryStats: LibraryStats[] = Array();
   displayedColumns: string[] = ['Artist Name', 'Track Name'];
-  displayedColumnsLS: string[] = ['Total Plays', 'Total Time', 'Total Skips'];
+  displayedColumnsLS: string[] = ['Total Plays', 'Total Time', 'Total Skips', 'Period'];
 
   constructor(private songStatsService: SongStatsService) { }
 
