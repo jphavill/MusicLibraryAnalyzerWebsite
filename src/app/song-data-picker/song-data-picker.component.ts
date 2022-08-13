@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 
 import {Track} from 'models/library.model';
 
 import { SongStatsService } from 'app/song-stats-service';
+import { EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-song-data-picker',
@@ -10,17 +11,20 @@ import { SongStatsService } from 'app/song-stats-service';
   styleUrls: ['./song-data-picker.component.sass']
 })
 export class SongDataPickerComponent implements OnInit {
-  loading:boolean = false;
-  libraryLoaded:boolean = false;
+  @Output() loadingEvent = new EventEmitter<boolean>();
   neverSelected:boolean = true;
   constructor(private songStatsService: SongStatsService) { }
 
   ngOnInit(): void {
   }
 
-  uploadSongs(e:Event){
+  updateLoading(value: boolean): void{
+    this.loadingEvent.emit(value);
+  }
+
+  uploadSongs(e:Event): void{
     this.updateSongs(Array())
-    this.libraryLoaded = false
+    this.updateLoading(true)
     this.neverSelected = false;
     this.loadSongs(e).then((library:Track[]) => this.updateSongs(library))
   }
@@ -33,10 +37,8 @@ export class SongDataPickerComponent implements OnInit {
   }
 
   updateSongs(library: Track[]){
-
     this.songStatsService.sendLibrary(library)
-    this.loading = false
-    this.libraryLoaded = true
+    this.updateLoading(false)
   }
 
 
