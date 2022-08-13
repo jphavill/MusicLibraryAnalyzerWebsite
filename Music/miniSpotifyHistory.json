@@ -1,0 +1,26 @@
+[
+  {
+    "endTime" : "2021-05-30 00:09",
+    "artistName" : "Fall Out Boy",
+    "trackName" : "Just One Yesterday",
+    "msPlayed" : 295574
+  },
+  {
+    "endTime" : "2021-05-30 00:12",
+    "artistName" : "Fall Out Boy",
+    "trackName" : "My Songs Know What You Did In The Dark (Light Em Up)",
+    "msPlayed" : 186826
+  },
+  {
+    "endTime" : "2021-05-30 00:16",
+    "artistName" : "Fall Out Boy",
+    "trackName" : "Save Rock And Roll",
+    "msPlayed" : 281080
+  },
+  {
+    "endTime" : "2021-05-30 00:20",
+    "artistName" : "Fall Out Boy",
+    "trackName" : "I Don't Care - Single Version",
+    "msPlayed" : 214493
+  }
+]

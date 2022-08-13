@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Tracks</key>
+	<dict>
+		<key>1289</key>
+		<dict>
+			<key>Track ID</key><integer>1289</integer>
+			<key>Name</key><string>Sanctified With Dynamite</string>
+			<key>Artist</key><string>Powerwolf</string>
+			<key>Album Artist</key><string>Powerwolf</string>
+			<key>Album</key><string>Blood of the Saints</string>
+			<key>Genre</key><string>Heavy Metal</string>
+			<key>Kind</key><string>Apple Music AAC audio file</string>
+			<key>Size</key><integer>9662109</integer>
+			<key>Total Time</key><integer>265720</integer>
+			<key>Disc Number</key><integer>1</integer>
+			<key>Disc Count</key><integer>1</integer>
+			<key>Track Number</key><integer>2</integer>
+			<key>Track Count</key><integer>11</integer>
+			<key>Year</key><integer>2011</integer>
+			<key>Date Modified</key><date>2019-09-21T00:43:00Z</date>
+			<key>Date Added</key><date>2017-04-15T23:46:01Z</date>
+			<key>Bit Rate</key><integer>256</integer>
+			<key>Sample Rate</key><integer>44100</integer>
+			<key>Volume Adjustment</key><integer>255</integer>
+			<key>Equalizer</key><string>Rock</string>
+			<key>Play Count</key><integer>40</integer>
+			<key>Play Date</key><integer>3722766339</integer>
+			<key>Play Date UTC</key><date>2021-12-19T17:45:39Z</date>
+			<key>Skip Count</key><integer>8</integer>
+			<key>Skip Date</key><date>2021-03-04T00:16:07Z</date>
+			<key>Release Date</key><date>2011-07-29T07:00:00Z</date>
+			<key>Normalization</key><integer>9899</integer>
+			<key>Artwork Count</key><integer>1</integer>
+			<key>Sort Album</key><string>Blood of the Saints</string>
+			<key>Sort Artist</key><string>Powerwolf</string>
+			<key>Sort Name</key><string>Sanctified With Dynamite</string>
+			<key>Persistent ID</key><string>291FB5F51C9E479B</string>
+			<key>Track Type</key><string>File</string>
+			<key>Protected</key><true/>
+			<key>Apple Music</key><true/>
+			<key>Location</key><string>file:///Users/jasonhavill/Music/iTunes/iTunes%20Media/Apple%20Music/Powerwolf/Blood%20of%20the%20Saints/02%20Sanctified%20With%20Dynamite.m4p</string>
+			<key>File Folder Count</key><integer>5</integer>
+			<key>Library Folder Count</key><integer>1</integer>
+		</dict>
+		<key>1292</key>
+		<dict>
+			<key>Track ID</key><integer>1292</integer>
+			<key>Name</key><string>We Drink Your Blood</string>
+			<key>Artist</key><string>Powerwolf</string>
+			<key>Album Artist</key><string>Powerwolf</string>
+			<key>Album</key><string>Blood of the Saints</string>
+			<key>Genre</key><string>Heavy Metal</string>
+			<key>Kind</key><string>Apple Music AAC audio file</string>
+			<key>Size</key><integer>8466532</integer>
+			<key>Total Time</key><integer>222560</integer>
+			<key>Disc Number</key><integer>1</integer>
+			<key>Disc Count</key><integer>1</integer>
+			<key>Track Number</key><integer>3</integer>
+			<key>Track Count</key><integer>11</integer>
+			<key>Year</key><integer>2011</integer>
+			<key>Date Modified</key><date>2019-09-21T00:43:03Z</date>
+			<key>Date Added</key><date>2017-04-15T23:46:01Z</date>
+			<key>Bit Rate</key><integer>256</integer>
+			<key>Sample Rate</key><integer>44100</integer>
+			<key>Volume Adjustment</key><integer>255</integer>
+			<key>Equalizer</key><string>Rock</string>
+			<key>Play Count</key><integer>49</integer>
+			<key>Play Date</key><integer>3733203419</integer>
+			<key>Play Date UTC</key><date>2022-04-19T11:56:59Z</date>
+			<key>Release Date</key><date>2011-07-29T07:00:00Z</date>
+			<key>Normalization</key><integer>8786</integer>
+			<key>Sort Album</key><string>Blood of the Saints</string>
+			<key>Sort Artist</key><string>Powerwolf</string>
+			<key>Sort Name</key><string>We Drink Your Blood</string>
+			<key>Persistent ID</key><string>A80E599D373D90CF</string>
+			<key>Track Type</key><string>File</string>
+			<key>Protected</key><true/>
+			<key>Apple Music</key><true/>
+			<key>Location</key><string>file:///Users/jasonhavill/Music/iTunes/iTunes%20Media/Apple%20Music/Powerwolf/Blood%20of%20the%20Saints/03%20We%20Drink%20Your%20Blood.m4p</string>
+			<key>File Folder Count</key><integer>5</integer>
+			<key>Library Folder Count</key><integer>1</integer>
+		</dict>
+</dict>
+</plist>
