@@ -12,6 +12,7 @@ import { SongStatsService } from 'app/song-stats-service';
 export class SongDataPickerComponent implements OnInit {
   loading:boolean = false;
   libraryLoaded:boolean = false;
+  neverSelected:boolean = true;
   constructor(private songStatsService: SongStatsService) { }
 
   ngOnInit(): void {
@@ -20,6 +21,7 @@ export class SongDataPickerComponent implements OnInit {
   uploadSongs(e:Event){
     this.updateSongs(Array())
     this.libraryLoaded = false
+    this.neverSelected = false;
     this.loadSongs(e).then((library:Track[]) => this.updateSongs(library))
   }
 

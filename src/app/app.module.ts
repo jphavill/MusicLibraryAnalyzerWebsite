@@ -14,12 +14,14 @@ import { SongDataPickerComponent } from './song-data-picker/song-data-picker.com
 import { SongStatsComponent } from './song-stats/song-stats.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatTableModule} from '@angular/material/table';
+import { MilliFormatPipe } from './pipes/milli-format.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     SongDataPickerComponent,
-    SongStatsComponent
+    SongStatsComponent,
+    MilliFormatPipe
   ],
   imports: [
     BrowserModule,

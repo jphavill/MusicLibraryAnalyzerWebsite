@@ -2,3 +2,7 @@
   <button mat-raised-button color="primary">Choose File</button>
   <input #uploadFile (change)="uploadSongs($event)" type='file' style="display:none"/>
 </div>
+
+<div *ngIf="neverSelected" class="filler">
+  <p>Please Upload a Library</p>
+</div>

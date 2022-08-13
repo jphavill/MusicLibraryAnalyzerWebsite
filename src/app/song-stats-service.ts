@@ -37,4 +37,25 @@ export class SongStatsService {
     this._songStats.next(songStats)
   }
 
+  updateLibraryStats(library: Track[]){
+    let totalTime: number = 0;
+    let totalSkips: number = 0;
+    let totalPlays: number = library.length;
+    library.forEach(track => {
+      totalTime = totalTime + track.msPlayed;
+      // if the track was played for less than 5 seconds it is considered skipped
+      if (track.msPlayed < 5000) {
+        totalSkips = totalSkips + 1;
+      }
+    })
+    this.sendLibraryStats(Array({
+      "totalPlays": totalPlays,
+      "totalTime": totalTime,
+      "totalSkips": totalSkips,
+      "averageSkips": 0,
+      "stdSkips": 0,
+    }))
+    return library;
+  }
+
 }
