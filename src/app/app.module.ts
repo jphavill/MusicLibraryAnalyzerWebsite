@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { AppRoutingModule } from './app-routing.module';
+import { AppRoutingModule, routingComponents } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -10,8 +10,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSliderModule } from '@angular/material/slider';
 import {MatButtonModule} from '@angular/material/button';
 import {MatListModule} from '@angular/material/list';
-import { SongDataPickerComponent } from './song-data-picker/song-data-picker.component';
-import { SongStatsComponent } from './song-stats/song-stats.component';
+
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatTableModule} from '@angular/material/table';
 import { MilliFormatPipe } from './pipes/milli-format.pipe';
@@ -21,13 +20,17 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 
+import { SongDataPickerComponent } from './upload-page/song-data-picker/song-data-picker.component';
+import { SongStatsComponent } from './upload-page/song-stats/song-stats.component';
+
 @NgModule({
   declarations: [
     AppComponent,
     SongDataPickerComponent,
     SongStatsComponent,
     MilliFormatPipe,
-    NavbarComponent
+    NavbarComponent,
+    routingComponents,
   ],
   imports: [
     BrowserModule,

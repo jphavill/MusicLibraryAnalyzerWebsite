@@ -1,0 +1,7 @@
+<h2 class="md-display2">Library Upload</h2>
+<div class="song-data-picker">
+  <app-song-data-picker (loadingEvent)="updateLoading($event)"></app-song-data-picker>
+</div>
+<div class="song-stats">
+  <app-song-stats [loading]="loading"></app-song-stats>
+</div>
