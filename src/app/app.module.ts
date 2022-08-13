@@ -15,13 +15,19 @@ import { SongStatsComponent } from './song-stats/song-stats.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatTableModule} from '@angular/material/table';
 import { MilliFormatPipe } from './pipes/milli-format.pipe';
+import { NavbarComponent } from './navbar/navbar.component';
+import { LayoutModule } from '@angular/cdk/layout';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
     AppComponent,
     SongDataPickerComponent,
     SongStatsComponent,
-    MilliFormatPipe
+    MilliFormatPipe,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
@@ -32,6 +38,10 @@ import { MilliFormatPipe } from './pipes/milli-format.pipe';
     MatListModule,
     MatProgressSpinnerModule,
     MatTableModule,
+    LayoutModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatIconModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

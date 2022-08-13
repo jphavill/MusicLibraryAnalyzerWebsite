@@ -1,5 +1,6 @@
-<div class="reddiv" (click)="uploadFile.click()">
-  <button mat-raised-button color="primary">Choose File</button>
+<div class="reddiv" >
+  <h2 class="md-display2">Library Upload</h2>
+  <button mat-raised-button color="primary" (click)="uploadFile.click()">Choose File</button>
   <input #uploadFile (change)="uploadSongs($event)" type='file' accept=".json" style="display:none"/>
 </div>
 
