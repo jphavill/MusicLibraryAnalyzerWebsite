@@ -1,4 +1,4 @@
-<mat-sidenav-container class="sidenav-container">
+<mat-sidenav-container class="sidenav-container mat-elevation-z8">
   <mat-sidenav #drawer class="sidenav" fixedInViewport
       [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
       [mode]="(isHandset$ | async) ? 'over' : 'side'"
@@ -20,6 +20,8 @@
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
       <span>Library Meta Analysis - Jason Havill</span>
+      <span class="navbar-spacer"></span>
+      <a mat-button href="https://github.com/jphavill/MusicLibraryAnalyzerWebsite"><mat-icon>link</mat-icon>GitHub</a>
     </mat-toolbar>
   </mat-sidenav-content>
 </mat-sidenav-container>
