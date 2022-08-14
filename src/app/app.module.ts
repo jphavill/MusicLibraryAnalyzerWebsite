@@ -29,6 +29,7 @@ import { GraphControlsComponent } from './graphs-page/graph-controls/graph-contr
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
+import { GraphViewComponent } from './graphs-page/graph-view/graph-view.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { MatSelectModule } from '@angular/material/select';
     NavbarComponent,
     routingComponents,
     GraphControlsComponent,
+    GraphViewComponent,
   ],
   imports: [
     BrowserModule,

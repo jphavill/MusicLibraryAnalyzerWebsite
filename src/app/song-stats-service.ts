@@ -14,10 +14,10 @@ export class SongStatsService {
   private _songStats: BehaviorSubject<TrackStats[]> = new BehaviorSubject(Array());
 
   // publically accessible data
-  public readonly library: Observable<Track[]> = this._library.asObservable();
-  public readonly libraryStats: Observable<LibraryStats[]> = this._libraryStats.asObservable();
-  public readonly artistStats: Observable<ArtistStats[]> = this._artistStats.asObservable();
-  public readonly trackStats: Observable<TrackStats[]> = this._songStats.asObservable();
+  public readonly library: BehaviorSubject<Track[]> = this._library;
+  public readonly libraryStats: BehaviorSubject<LibraryStats[]> = this._libraryStats;
+  public readonly artistStats: BehaviorSubject<ArtistStats[]> = this._artistStats;
+  public readonly trackStats: BehaviorSubject<TrackStats[]> = this._songStats;
   constructor() { }
 
   // updates all subscribed components with the new library

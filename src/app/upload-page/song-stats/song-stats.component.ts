@@ -21,6 +21,8 @@ export class SongStatsComponent implements OnInit {
   ngOnInit(): void {
     this.songStatsService.library.subscribe(response => this.library = this.songStatsService.updateLibraryStats(response))
     this.songStatsService.libraryStats.subscribe(response => this.libraryStats = response)
+    console.log("initing")
+    console.log(this.songStatsService.libraryStats.getValue())
   }
 
 }
