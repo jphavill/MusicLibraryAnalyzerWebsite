@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule, routingComponents } from './app-routing.module';
@@ -19,9 +20,15 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatDatepickerModule} from '@angular/material/datepicker';
 
 import { SongDataPickerComponent } from './upload-page/song-data-picker/song-data-picker.component';
 import { SongStatsComponent } from './upload-page/song-stats/song-stats.component';
+import { GraphControlsComponent } from './graphs-page/graph-controls/graph-controls.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -31,6 +38,7 @@ import { SongStatsComponent } from './upload-page/song-stats/song-stats.componen
     MilliFormatPipe,
     NavbarComponent,
     routingComponents,
+    GraphControlsComponent,
   ],
   imports: [
     BrowserModule,
@@ -45,6 +53,12 @@ import { SongStatsComponent } from './upload-page/song-stats/song-stats.componen
     MatToolbarModule,
     MatSidenavModule,
     MatIconModule,
+    MatSlideToggleModule,
+    MatDatepickerModule,
+    MatFormFieldModule,
+    MatNativeDateModule,
+    MatSelectModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
