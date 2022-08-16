@@ -1,11 +1,7 @@
 <main>
-  <h1 class="md-display1">{{title}}</h1>
-  <div class="song-data-picker">
-    <app-song-data-picker></app-song-data-picker>
+  <app-navbar></app-navbar>
+  <div class="content">
+    <div class="router"><router-outlet></router-outlet></div>
   </div>
-  <div class="song-stats">
-    <app-song-stats></app-song-stats>
-  </div>
-  <router-outlet></router-outlet>
 </main>
 

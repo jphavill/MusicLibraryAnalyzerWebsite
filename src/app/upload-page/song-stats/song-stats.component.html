@@ -1,4 +1,4 @@
-<div *ngIf="library.length == 0">
+<div *ngIf="loading">
   <mat-spinner></mat-spinner>
 </div>
 
@@ -16,11 +16,15 @@
       <th mat-header-cell *matHeaderCellDef> Total Skips </th>
       <td mat-cell *matCellDef="let stat"> {{stat.totalSkips}} </td>
     </ng-container>
+    <ng-container matColumnDef="Period">
+      <th mat-header-cell *matHeaderCellDef> Period </th>
+      <td mat-cell *matCellDef="let stat"> {{stat.firstDate | date:'mediumDate'}} --- {{stat.lastDate | date:'mediumDate'}}</td>
+    </ng-container>
     <tr mat-header-row *matHeaderRowDef="displayedColumnsLS"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumnsLS;"></tr>
   </table>
 </div>
-
+<!--
 <div *ngIf="library.length > 0" class="song-list">
   <table mat-table [dataSource]="library" class="mat-elevation-z8">
     <ng-container matColumnDef="Artist Name">
@@ -31,9 +35,13 @@
       <th mat-header-cell *matHeaderCellDef> Track Name </th>
       <td mat-cell *matCellDef="let track"> {{track.trackName}} </td>
     </ng-container>
+    <ng-container matColumnDef="Play Date">
+      <th mat-header-cell *matHeaderCellDef> Play Date </th>
+      <td mat-cell *matCellDef="let track"> {{track.endTime | date:'mediumDate'}} </td>
+    </ng-container>
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
-</div>
+</div> -->
 
 

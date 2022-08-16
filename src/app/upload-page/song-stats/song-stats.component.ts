@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { SongStatsService } from 'app/song-stats-service';
 import { Track } from 'models/library.model';
 import { LibraryStats } from 'models/stat.model';
@@ -9,12 +9,12 @@ import { LibraryStats } from 'models/stat.model';
   styleUrls: ['./song-stats.component.sass']
 })
 export class SongStatsComponent implements OnInit {
-  loading:boolean = false;
+  @Input() loading:boolean = false;
   libraryLoaded:boolean = false;
   library: Track[] = Array();
   libraryStats: LibraryStats[] = Array();
-  displayedColumns: string[] = ['Artist Name', 'Track Name'];
-  displayedColumnsLS: string[] = ['Total Plays', 'Total Time', 'Total Skips'];
+  displayedColumns: string[] = ['Artist Name', 'Track Name', 'Play Date'];
+  displayedColumnsLS: string[] = ['Total Plays', 'Total Time', 'Total Skips', 'Period'];
 
   constructor(private songStatsService: SongStatsService) { }
 

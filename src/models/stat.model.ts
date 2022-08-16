@@ -4,6 +4,8 @@ export interface LibraryStats {
   "totalSkips": number;
   "averageSkips": number;
   "stdSkips": number;
+  "firstDate": Date;
+  "lastDate": Date;
 }
 
 export interface ArtistStats {
@@ -11,8 +13,6 @@ export interface ArtistStats {
   "totalPlays": number;
   "totalTime": number;
   "totalSkips": number;
-  "averageSkips": number;
-  "stdSkips": number;
 }
 
 export interface TrackStats {
@@ -20,7 +20,6 @@ export interface TrackStats {
   "totalPlays": number;
   "totalTime": number;
   "totalSkips": number;
-  "averageSkips": number;
-  "stdSkips": number;
+  "datePlayed": Date;
 }
 
