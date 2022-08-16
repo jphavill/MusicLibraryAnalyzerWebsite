@@ -92,7 +92,6 @@ export class SongStatsService {
     }))
 
     this.sendArtistStats(tempArtistStats)
-    console.log(tempArtistStats)
     return library;
   }
 

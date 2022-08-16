@@ -1,10 +1,12 @@
-<div style="width: 40%;">
+<div style="width: 80%;">
   <canvas
     baseChart
-    [chartType]="'line'"
+    height="5880 + px"
+    width="100%"
+    [chartType]="'horizontalBar'"
     [legend]="true"
     [datasets]="chartData"
-    [labels]="chartLabels"
+    [labels]="artistList"
     [options]="chartOptions"
   >
   </canvas>
