@@ -31,6 +31,8 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { GraphViewComponent } from './graphs-page/graph-view/graph-view.component';
 
+import { ChartsModule } from 'ng2-charts';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -62,6 +64,7 @@ import { GraphViewComponent } from './graphs-page/graph-view/graph-view.componen
     MatSelectModule,
     FormsModule,
     ReactiveFormsModule,
+    ChartsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
