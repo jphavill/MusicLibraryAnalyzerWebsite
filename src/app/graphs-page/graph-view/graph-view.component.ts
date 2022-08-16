@@ -74,6 +74,7 @@ export class GraphViewComponent implements OnInit {
     this.artistPlaysList = Array.from(artistStats.values(), (entry) => (entry.totalPlays))
     this.chartData = [{data: this.artistPlaysList, label: 'plays'}]
     this.chartHeight = this.chartData[0].data.length * 20
+    console.log(this.chartHeight)
     // this.updateGraph(artistStats)
     return artistStats
   }
