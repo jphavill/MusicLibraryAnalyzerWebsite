@@ -1,8 +1,9 @@
 <div *ngIf="loading">
   <mat-spinner></mat-spinner>
 </div>
-
 <div *ngIf="libraryStats.length > 0 && libraryStats[0].totalPlays > 0" class="library-stats">
+  <p>Explore More Stats on the Graphing Page <a mat-raised-button color="primary" routerLink="graph" class="text_spacer">Graphs</a> </p>
+
   <table mat-table [dataSource]="libraryStats" class="mat-elevation-z8">
     <ng-container matColumnDef="Total Plays">
       <th mat-header-cell *matHeaderCellDef> Total Plays </th>
