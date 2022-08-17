@@ -1,15 +1,15 @@
 <div class="control-grid">
   <mat-form-field appearance="fill" class="graph-select graph-category">
     <mat-label>Category</mat-label>
-    <mat-select [(value)]="category">
-      <mat-option *ngFor="let name of categoriesKeys" value={{name}}>{{categories[name]}}</mat-option>
+    <mat-select [(value)]="categoryType" (selectionChange)="updateControls()">
+      <mat-option *ngFor="let name of categoriesValues" [value]="name">{{categories[name]}}</mat-option>
     </mat-select>
   </mat-form-field>
 
   <mat-form-field appearance="fill" class="graph-select graph-datatype">
     <mat-label>Data Type</mat-label>
-    <mat-select [(value)]="dataType">
-      <mat-option *ngFor="let name of dataTypesKeys" value={{name}}>{{dataTypes[name]}}</mat-option>
+    <mat-select [(value)]="dataType" (selectionChange)="updateControls()">
+      <mat-option *ngFor="let name of dataTypesValues" value={{name}}>{{dataTypes[name]}}</mat-option>
     </mat-select>
   </mat-form-field>
 
@@ -17,14 +17,14 @@
     <mat-label>Date Range</mat-label>
     <mat-date-range-input [min]="dateMin" [max]="dateMax" [rangePicker]="picker" [formGroup]="range">
       <input matStartDate formControlName="start" placeholder="Start date">
-      <input matEndDate formControlName="end" placeholder="End date">
+      <input matEndDate formControlName="end" placeholder="End date" (dateChange)="updateControls()">
     </mat-date-range-input>
     <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-date-range-picker #picker></mat-date-range-picker>
   </mat-form-field>
 
-  <mat-slide-toggle class="graph-percentage" [(ngModel)]="percentChecked" >Percentage</mat-slide-toggle>
+  <mat-slide-toggle class="graph-percentage" [(ngModel)]="percent" (change)="updateControls()">Percentage</mat-slide-toggle>
 
 </div>
 

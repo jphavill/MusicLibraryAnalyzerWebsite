@@ -1,11 +1,19 @@
 export enum graphCategory {
-  Song = 1,
-  Artist
+  Song = 'Song',
+  Artist = 'Artist'
 };
 
 export enum graphDataType {
-  Plays = 1,
-  Time,
-  Skips,
-  SkipsPerPlay
+  Plays = 'Plays',
+  Time = 'Time',
+  Skips = 'Skips',
+  SkipsPerPlay = 'SkipsPerPlay'
 };
+
+export interface GraphControls {
+  dataType: graphDataType,
+  categortyType: graphCategory,
+  percent: boolean,
+  dateMin?: Date,
+  dateMax?: Date
+}

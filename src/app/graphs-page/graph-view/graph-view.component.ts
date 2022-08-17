@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, SimpleChange } from '@angular/core';
 import { SongStatsService } from 'app/song-stats-service';
-import { ChartScales, NestedTickOptions } from 'chart.js';
-import { LibraryStats, ArtistStats } from 'models/stat.model'
+import { ChartScales } from 'chart.js';
+import { graphCategory, GraphControls, graphDataType } from 'models/graphSelections';
+import { LibraryStats, ArtistStats, TrackStats } from 'models/stat.model'
 
 @Component({
   selector: 'app-graph-view',
@@ -12,9 +13,17 @@ export class GraphViewComponent implements OnInit {
   libraryStats: LibraryStats[] = Array();
   artistStats: Map<string, ArtistStats> = new Map<string, ArtistStats>();
   artistList: string[] = Array()
-  artistPlaysList: number[] = Array()
+  artistDataList: number[] = Array()
 
   chartHeight: number = 0
+
+  @Input() graphControls: GraphControls = {
+    dataType: graphDataType.Plays,
+    categortyType: graphCategory.Artist,
+    percent: false,
+    dateMin: new Date(),
+    dateMax: new Date()
+  }
 
   chartData = [
     {
@@ -62,37 +71,51 @@ export class GraphViewComponent implements OnInit {
   artistLabels: Array<string> = Array()
 
 
-  constructor(private songStatsService: SongStatsService) { }
+  constructor(private songStatsService: SongStatsService) {}
 
   ngOnInit(): void {
     this.songStatsService.libraryStats.subscribe(response => this.libraryStats = response)
-    this.songStatsService.artistStats.subscribe(response => this.artistStats = this.updateArtistStats(response))
+    this.songStatsService.artistStats.subscribe(response => this.updateArtistStats(response))
+  }
+
+  ngOnChanges(changes: SimpleChange) {
+    console.log(changes)
+    this.updateArtistStats(this.artistStats)
   }
 
   updateArtistStats(artistStats: Map<string, ArtistStats>): Map<string, ArtistStats>{
+    this.artistStats = artistStats
+    let mapFunc
+    let label: string
+    switch(this.graphControls.dataType) {
+      case graphDataType.Plays: {
+        mapFunc = function(entry: ArtistStats | TrackStats) { return entry.totalPlays }
+        label = 'Plays'
+        break;
+      }
+      case graphDataType.Time: {
+        mapFunc = function(entry: ArtistStats | TrackStats) { return entry.totalTime }
+        label = 'Time'
+        break;
+      }
+      case graphDataType.Skips: {
+        mapFunc = function(entry: ArtistStats | TrackStats) { return entry.totalSkips }
+        label = 'Skips'
+        break;
+      }
+
+      default: {
+        mapFunc = function(entry: ArtistStats | TrackStats) { return entry.totalSkips / entry.totalPlays }
+        label = 'Skips Per Play'
+        break;
+      }
+    }
+
+    this.artistDataList = Array.from(artistStats.values(), mapFunc)
     this.artistList = [ ...artistStats.keys()]
-    this.artistPlaysList = Array.from(artistStats.values(), (entry) => (entry.totalPlays))
-    this.chartData = [{data: this.artistPlaysList, label: 'plays'}]
+    this.chartData = [{data: this.artistDataList, label: label}]
     this.chartHeight = this.chartData[0].data.length * 20
-    console.log(this.chartHeight)
-    // this.updateGraph(artistStats)
     return artistStats
   }
-
-  artistMapFunc( artist: ArtistStats): {data: number[], label: string}{
-    let label: string = artist.name;
-    let data: number = artist.totalPlays;
-    return {data: [data], label: label}
-  }
-
-  updateGraph(artistStats: Map<string, ArtistStats>){
-    let result: {data: number[], label: string}[] = Array.from(artistStats.values(), (entry) => this.artistMapFunc(entry))
-    if (result.length > 10){
-      this.chartData = result.slice(0,10)
-    } else {
-      this.chartData = result;
-    }
-  }
-
 
 }
