@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { graphCategory, GraphControls, graphDataType } from 'models/graphSelections';
+import { graphCategory, GraphControls, graphDataType, sortDirection } from 'models/graphSelections';
 
 @Component({
   selector: 'app-graphs-page',
@@ -13,7 +13,8 @@ export class GraphsPageComponent implements OnInit {
     categortyType: graphCategory.Artist,
     percent: false,
     dateMin: new Date(),
-    dateMax: new Date()
+    dateMax: new Date(),
+    sortDirection: sortDirection.descending
   }
   constructor() {
 

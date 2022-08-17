@@ -14,6 +14,13 @@ export interface GraphControls {
   dataType: graphDataType,
   categortyType: graphCategory,
   percent: boolean,
-  dateMin?: Date,
-  dateMax?: Date
+  dateMin: Date,
+  dateMax: Date,
+  sortDirection: sortDirection,
 }
+
+export enum sortDirection{
+  ascending = 1,
+  descending = -1
+};
+

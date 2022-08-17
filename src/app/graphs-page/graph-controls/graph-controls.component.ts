@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { graphCategory, GraphControls, graphDataType } from 'models/graphSelections';
+import { graphCategory, GraphControls, graphDataType, sortDirection } from 'models/graphSelections';
 
 import { SongStatsService } from 'app/song-stats-service';
 import { LibraryStats } from 'models/stat.model'
@@ -21,6 +21,7 @@ export class GraphControlsComponent implements OnInit {
 
   dateMin: Date = new Date()
   dateMax: Date = new Date()
+  sortDirection = sortDirection.descending
 
 
   categories = graphCategory;
@@ -67,9 +68,15 @@ export class GraphControlsComponent implements OnInit {
         categortyType: this.categoryType,
         percent: this.percent,
         dateMin: this.dateMin,
-        dateMax: this.dateMax
+        dateMax: this.dateMax,
+        sortDirection: this.sortDirection
       }
     )
+  }
+
+  toggleSort(): void {
+    this.sortDirection = this.sortDirection == sortDirection.descending ? sortDirection.ascending : sortDirection.descending
+    this.updateControls()
   }
 
 }
