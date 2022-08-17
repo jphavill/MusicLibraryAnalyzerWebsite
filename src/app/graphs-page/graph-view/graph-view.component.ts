@@ -12,8 +12,10 @@ import { LibraryStats, ArtistStats, TrackStats } from 'models/stat.model'
 export class GraphViewComponent implements OnInit {
   libraryStats: LibraryStats[] = Array();
   artistStats: Map<string, ArtistStats> = new Map<string, ArtistStats>();
-  artistList: string[] = Array()
-  artistDataList: number[] = Array()
+  trackStats: Map<string, TrackStats> = new Map<string, TrackStats>();
+
+  chartXValues: string[] = Array()
+  chartYValues: number[] = Array()
 
   chartHeight: number = 0
 
@@ -24,6 +26,8 @@ export class GraphViewComponent implements OnInit {
     dateMin: new Date(),
     dateMax: new Date()
   }
+
+  chartLabels: string[] = Array()
 
   chartData = [
     {
@@ -38,15 +42,14 @@ export class GraphViewComponent implements OnInit {
           position: 'top',
           ticks: {
               maxRotation: 90,
-              minRotation: 80
+              minRotation: 80,
+              beginAtZero: true
           }
       }
-
   ],
   yAxes: [
     {
         ticks: {
-
             callback: function(value) {
               let valueS = (value as string)
               if (valueS.length <= 23) {
@@ -74,19 +77,49 @@ export class GraphViewComponent implements OnInit {
   constructor(private songStatsService: SongStatsService) {}
 
   ngOnInit(): void {
-    this.songStatsService.libraryStats.subscribe(response => this.libraryStats = response)
+    this.songStatsService.libraryStats.subscribe(response => this.updateLibraryStats(response))
     this.songStatsService.artistStats.subscribe(response => this.updateArtistStats(response))
+    this.songStatsService.trackStats.subscribe(response => this.updateTrackStats(response))
   }
 
   ngOnChanges(changes: SimpleChange) {
-    console.log(changes)
-    this.updateArtistStats(this.artistStats)
+    this.updateStats()
   }
 
-  updateArtistStats(artistStats: Map<string, ArtistStats>): Map<string, ArtistStats>{
+
+
+  updateLibraryStats(libraryStats: LibraryStats[]): void{
+    this.libraryStats = libraryStats
+    this.updateStats()
+  }
+
+  updateArtistStats(artistStats: Map<string, ArtistStats>): void{
     this.artistStats = artistStats
+    this.updateStats()
+  }
+
+  updateTrackStats(trackStats: Map<string, TrackStats>): void{
+    this.trackStats = trackStats
+    this.updateStats()
+  }
+
+
+  updateStats(){
     let mapFunc
     let label: string
+
+    let stats: Map<string, ArtistStats> | Map<string, TrackStats>
+    switch(this.graphControls.categortyType) {
+      case graphCategory.Song: {
+        stats = this.trackStats
+        break;
+      }
+      default: {
+        stats = this.artistStats
+        break;
+      }
+    }
+
     switch(this.graphControls.dataType) {
       case graphDataType.Plays: {
         mapFunc = function(entry: ArtistStats | TrackStats) { return entry.totalPlays }
@@ -111,11 +144,12 @@ export class GraphViewComponent implements OnInit {
       }
     }
 
-    this.artistDataList = Array.from(artistStats.values(), mapFunc)
-    this.artistList = [ ...artistStats.keys()]
-    this.chartData = [{data: this.artistDataList, label: label}]
-    this.chartHeight = this.chartData[0].data.length * 20
-    return artistStats
+
+
+    this.chartYValues = Array.from(stats.values(), mapFunc)
+    this.chartXValues = [ ...stats.keys()]
+    this.chartData = [{data: this.chartYValues, label: label}]
+    this.chartHeight = this.chartYValues.length * 20 + 70
   }
 
 }
