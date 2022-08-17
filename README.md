@@ -4,6 +4,6 @@ Sort, display, and visualize data about your Spotify library and history. For ex
 
 Site is live at [jasonhavill.com](https://www.jasonhavill.com/)
  
-Below are examples of graphs
+Below is an example of a graph
 
-![](https://github.com/jphavill/MusicLibraryAnalyzerWebsite/blob/master/ExamplePics/ExampleSkipsPerPlay.png)
+![](https://github.com/jphavill/MusicLibraryAnalyzerWebsite/blob/main/ExamplePics/ExampleSkipsPerPlay.png)
