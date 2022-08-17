@@ -75,7 +75,7 @@ export class SongStatsService {
         tempArtistStats.set(track.artistName, {
           "name": track.artistName,
           "totalPlays": tempArtistStat.totalPlays + 1,
-          "totalTime": tempArtistStat.totalPlays + track.msPlayed,
+          "totalTime": tempArtistStat.totalTime + track.msPlayed,
           "totalSkips": tempArtistStat.totalSkips + (skip ? 1 : 0),
         })
       }

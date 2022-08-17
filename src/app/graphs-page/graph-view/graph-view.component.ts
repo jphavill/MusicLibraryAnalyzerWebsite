@@ -94,8 +94,8 @@ export class GraphViewComponent implements OnInit {
         break;
       }
       case graphDataType.Time: {
-        mapFunc = function(entry: ArtistStats | TrackStats) { return entry.totalTime }
-        label = 'Time'
+        mapFunc = function(entry: ArtistStats | TrackStats) { return Math.round(entry.totalTime / 600) / 100}
+        label = 'Time (Minutes)'
         break;
       }
       case graphDataType.Skips: {
