@@ -24,6 +24,5 @@ export class GraphsPageComponent implements OnInit {
 
   updateGraphControls(value: GraphControls): void{
     this.graphControls = value;
-    console.log("updating")
   }
 }
