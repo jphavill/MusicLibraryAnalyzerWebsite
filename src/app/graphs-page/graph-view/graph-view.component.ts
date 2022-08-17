@@ -1,8 +1,8 @@
 import { Component, Input, OnInit, SimpleChange } from '@angular/core';
 import { SongStatsService } from 'app/song-stats-service';
-import { ChartScales } from 'chart.js';
 import { graphCategory, GraphControls, graphDataType, sortDirection } from 'models/graphSelections';
 import { LibraryStats, ArtistStats, TrackStats } from 'models/stat.model'
+import { chartOptions } from './graphSettings';
 
 @Component({
   selector: 'app-graph-view',
@@ -37,40 +37,7 @@ export class GraphViewComponent implements OnInit {
     },
   ];
 
-  scales: ChartScales = {
-    xAxes: [
-      {
-          position: 'top',
-          ticks: {
-              maxRotation: 90,
-              minRotation: 80,
-              beginAtZero: true
-          }
-      }
-  ],
-  yAxes: [
-    {
-        ticks: {
-            callback: function(value) {
-              let valueS = (value as string)
-              if (valueS.length <= 23) {
-                return valueS
-              }
-              return valueS.substring(0, 20) + '...'
-            },
-            maxRotation: 90,
-            minRotation: 0
-        }
-
-    }
-  ]
-  }
-
-  chartOptions = {
-    responsive: true,
-    scales: this.scales,
-    maintainAspectRatio: false
-  };
+  chartOptions = chartOptions
 
   artistLabels: Array<string> = Array()
 
