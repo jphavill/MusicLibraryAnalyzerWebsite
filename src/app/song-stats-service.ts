@@ -33,7 +33,7 @@ export class SongStatsService {
     this._artistStats.next(artistStats)
   }
 
-  sendsongStats(songStats: Map<string, TrackStats>){
+  sendTrackStats(songStats: Map<string, TrackStats>){
     this._songStats.next(songStats)
   }
 
@@ -51,6 +51,7 @@ export class SongStatsService {
 
     // Artist Stats
     let tempArtistStats = new Map<string, ArtistStats>()
+    let tempTrackStats = new Map<string, TrackStats>()
 
     // Song Stats
 
@@ -75,11 +76,31 @@ export class SongStatsService {
         tempArtistStats.set(track.artistName, {
           "name": track.artistName,
           "totalPlays": tempArtistStat.totalPlays + 1,
-          "totalTime": tempArtistStat.totalPlays + track.msPlayed,
+          "totalTime": tempArtistStat.totalTime + track.msPlayed,
           "totalSkips": tempArtistStat.totalSkips + (skip ? 1 : 0),
         })
       }
 
+      // Track Stats
+
+      if (!tempTrackStats.has(track.trackName)){
+        tempTrackStats.set(track.trackName, {
+          "name": track.trackName,
+          "totalPlays": 1,
+          "totalTime": track.msPlayed,
+          "totalSkips": skip ? 1 : 0,
+          "datePlayed": track.endTime
+        })
+      } else {
+        let tempTrackStat: TrackStats = tempTrackStats.get(track.trackName)!
+        tempTrackStats.set(track.trackName, {
+          "name": track.trackName,
+          "totalPlays": tempTrackStat.totalPlays + 1,
+          "totalTime": tempTrackStat.totalTime + track.msPlayed,
+          "totalSkips": tempTrackStat.totalSkips + (skip ? 1 : 0),
+          "datePlayed": track.endTime
+        })
+      }
     })
     this.sendLibraryStats(Array({
       "totalPlays": totalPlays,
@@ -92,6 +113,7 @@ export class SongStatsService {
     }))
 
     this.sendArtistStats(tempArtistStats)
+    this.sendTrackStats(tempTrackStats)
     return library;
   }
 

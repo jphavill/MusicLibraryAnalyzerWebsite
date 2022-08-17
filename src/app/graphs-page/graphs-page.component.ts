@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { graphCategory, GraphControls, graphDataType, sortDirection } from 'models/graphSelections';
 
 @Component({
   selector: 'app-graphs-page',
@@ -7,9 +8,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GraphsPageComponent implements OnInit {
 
-  constructor() { }
+  graphControls: GraphControls = {
+    dataType: graphDataType.Plays,
+    categortyType: graphCategory.Artist,
+    percent: false,
+    dateMin: new Date(),
+    dateMax: new Date(),
+    sortDirection: sortDirection.descending
+  }
+  constructor() {
+
+   }
 
   ngOnInit(): void {
   }
 
+  updateGraphControls(value: GraphControls): void{
+    this.graphControls = value;
+  }
 }

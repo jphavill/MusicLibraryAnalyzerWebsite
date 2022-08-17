@@ -1,13 +1,13 @@
-<div style="width: 80%;">
+<div style="width: 90%;position: relative" [style.height.px]="chartHeight" *ngIf="chartData.length > 0 && chartData[0].data.length > 0;else no_graph">
   <canvas
     baseChart
-    [height]="chartHeight"
-    width="100%"
     [chartType]="'horizontalBar'"
     [legend]="true"
     [datasets]="chartData"
-    [labels]="artistList"
+    [labels]="chartXValues"
     [options]="chartOptions"
   >
   </canvas>
 </div>
+
+<ng-template #no_graph><a mat-raised-button color="primary" routerLink="" class="text_spacer">Upload a Library</a></ng-template>

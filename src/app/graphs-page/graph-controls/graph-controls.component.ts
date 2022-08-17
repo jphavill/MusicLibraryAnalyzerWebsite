@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { graphCategory, graphDataType } from 'models/graphSelections';
+import { graphCategory, GraphControls, graphDataType, sortDirection } from 'models/graphSelections';
 
 import { SongStatsService } from 'app/song-stats-service';
 import { LibraryStats } from 'models/stat.model'
@@ -21,22 +21,26 @@ export class GraphControlsComponent implements OnInit {
 
   dateMin: Date = new Date()
   dateMax: Date = new Date()
+  sortDirection = sortDirection.descending
 
 
   categories = graphCategory;
   dataTypes = graphDataType;
-  percentChecked: boolean = false;
+  percent: boolean = false;
 
-  categoriesKeys = Array();
-  dataTypesKeys = Array();
+  @Output() graphControlsEvent = new EventEmitter<GraphControls>();
+
+
+  categoriesKeys = Object.keys(this.categories);
+  categoriesValues = Object.values(graphCategory)
+  dataTypesKeys = Object.keys(this.dataTypes);
+  dataTypesValues = Object.values(graphDataType)
 
   // graph defaults to displaying how many plays each artist had
-  category: string = graphCategory.Artist.toString()
-  dataType: string = graphDataType.Plays.toString()
+  categoryType: graphCategory = graphCategory.Artist
+  dataType: graphDataType = graphDataType.Plays
 
   constructor(private songStatsService: SongStatsService) {
-    this.categoriesKeys = Object.keys(this.categories).filter(f => !isNaN(Number(f)));
-    this.dataTypesKeys = Object.keys(this.dataTypes).filter(f => !isNaN(Number(f)));
   }
 
   setDefaultDate(){
@@ -55,8 +59,24 @@ export class GraphControlsComponent implements OnInit {
     if (this.libraryStats.length > 0){
       this.setDefaultDate()
     }
+  }
 
+  updateControls(): void {
+    this.graphControlsEvent.emit(
+      {
+        dataType: this.dataType,
+        categortyType: this.categoryType,
+        percent: this.percent,
+        dateMin: this.dateMin,
+        dateMax: this.dateMax,
+        sortDirection: this.sortDirection
+      }
+    )
+  }
 
+  toggleSort(): void {
+    this.sortDirection = this.sortDirection == sortDirection.descending ? sortDirection.ascending : sortDirection.descending
+    this.updateControls()
   }
 
 }
