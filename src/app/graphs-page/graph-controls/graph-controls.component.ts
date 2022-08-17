@@ -61,13 +61,6 @@ export class GraphControlsComponent implements OnInit {
   }
 
   updateControls(): void {
-    console.log({
-      dataType: this.dataType,
-        categortyType: this.categoryType,
-        percent: this.percent,
-        dateMin: this.dateMin,
-        dateMax: this.dateMax
-    })
     this.graphControlsEvent.emit(
       {
         dataType: this.dataType,
