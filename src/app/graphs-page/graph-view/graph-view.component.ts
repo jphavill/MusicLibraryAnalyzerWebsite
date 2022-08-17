@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, SimpleChange } from '@angular/core';
 import { SongStatsService } from 'app/song-stats-service';
 import { ChartScales } from 'chart.js';
-import { graphCategory, GraphControls, graphDataType } from 'models/graphSelections';
+import { graphCategory, GraphControls, graphDataType, sortDirection } from 'models/graphSelections';
 import { LibraryStats, ArtistStats, TrackStats } from 'models/stat.model'
 
 @Component({
@@ -24,15 +24,16 @@ export class GraphViewComponent implements OnInit {
     categortyType: graphCategory.Artist,
     percent: false,
     dateMin: new Date(),
-    dateMax: new Date()
+    dateMax: new Date(),
+    sortDirection: sortDirection.descending
   }
 
   chartLabels: string[] = Array()
 
   chartData = [
     {
-      data: [1],
-      label: 'Account A'
+      data: Array(),
+      label: ''
     },
   ];
 
@@ -86,8 +87,6 @@ export class GraphViewComponent implements OnInit {
     this.updateStats()
   }
 
-
-
   updateLibraryStats(libraryStats: LibraryStats[]): void{
     this.libraryStats = libraryStats
     this.updateStats()
@@ -105,17 +104,18 @@ export class GraphViewComponent implements OnInit {
 
 
   updateStats(){
-    let mapFunc
+    let mapFunc: (v: ArtistStats, k: number) => number
     let label: string
+    let chartXValues = new Array()
 
-    let stats: Map<string, ArtistStats> | Map<string, TrackStats>
+    let stats: ArtistStats[] | TrackStats[]
     switch(this.graphControls.categortyType) {
       case graphCategory.Song: {
-        stats = this.trackStats
+        stats = Array.from(this.trackStats.values())
         break;
       }
       default: {
-        stats = this.artistStats
+        stats = Array.from(this.artistStats.values())
         break;
       }
     }
@@ -144,10 +144,9 @@ export class GraphViewComponent implements OnInit {
       }
     }
 
-
-
-    this.chartYValues = Array.from(stats.values(), mapFunc)
-    this.chartXValues = [ ...stats.keys()]
+    stats.sort((a: ArtistStats | TrackStats, b: ArtistStats | TrackStats) => (mapFunc(a, 0) > mapFunc(b, 0)) ? this.graphControls.sortDirection: -1 * this.graphControls.sortDirection)
+    this.chartYValues = Array.from(stats, mapFunc)
+    this.chartXValues = Array.from(stats, (entry) => entry.name)
     this.chartData = [{data: this.chartYValues, label: label}]
     this.chartHeight = this.chartYValues.length * 20 + 70
   }

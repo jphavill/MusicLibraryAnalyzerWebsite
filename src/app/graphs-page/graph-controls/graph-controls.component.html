@@ -26,6 +26,10 @@
 
   <mat-slide-toggle class="graph-percentage" [(ngModel)]="percent" (change)="updateControls()">Percentage</mat-slide-toggle>
 
+  <button mat-mini-fab color="basic" (click)="toggleSort()">
+    <mat-icon>{{sortDirection == 1 ? 'arrow_upward' : 'arrow_downward'}}</mat-icon>
+  </button>
+
 </div>
 
 
