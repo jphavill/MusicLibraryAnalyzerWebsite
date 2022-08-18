@@ -1,8 +1,9 @@
-import { Component, Input, OnInit, SimpleChange } from '@angular/core';
+import { Component, OnInit, SimpleChange } from '@angular/core';
 import { SongStatsService } from 'app/song-stats-service';
-import { ChartScales } from 'chart.js';
-import { graphCategory, GraphControls, graphDataType, sortDirection } from 'models/graphSelections';
+import { graphCategory, GraphControls, graphControlsDefault, graphDataType } from 'models/graphSelections';
 import { LibraryStats, ArtistStats, TrackStats } from 'models/stat.model'
+import { GraphsControlService } from '../graphs-control-service/graphs-control.service';
+import { chartOptions } from './graphSettings';
 
 @Component({
   selector: 'app-graph-view',
@@ -19,14 +20,7 @@ export class GraphViewComponent implements OnInit {
 
   chartHeight: number = 0
 
-  @Input() graphControls: GraphControls = {
-    dataType: graphDataType.Plays,
-    categortyType: graphCategory.Artist,
-    percent: false,
-    dateMin: new Date(),
-    dateMax: new Date(),
-    sortDirection: sortDirection.descending
-  }
+  graphControls: GraphControls = graphControlsDefault
 
   chartLabels: string[] = Array()
 
@@ -37,50 +31,23 @@ export class GraphViewComponent implements OnInit {
     },
   ];
 
-  scales: ChartScales = {
-    xAxes: [
-      {
-          position: 'top',
-          ticks: {
-              maxRotation: 90,
-              minRotation: 80,
-              beginAtZero: true
-          }
-      }
-  ],
-  yAxes: [
-    {
-        ticks: {
-            callback: function(value) {
-              let valueS = (value as string)
-              if (valueS.length <= 23) {
-                return valueS
-              }
-              return valueS.substring(0, 20) + '...'
-            },
-            maxRotation: 90,
-            minRotation: 0
-        }
-
-    }
-  ]
-  }
-
-  chartOptions = {
-    responsive: true,
-    scales: this.scales,
-    maintainAspectRatio: false
-  };
+  chartOptions = chartOptions
 
   artistLabels: Array<string> = Array()
 
 
-  constructor(private songStatsService: SongStatsService) {}
+  constructor(private songStatsService: SongStatsService, private graphControlService: GraphsControlService) {}
 
   ngOnInit(): void {
     this.songStatsService.libraryStats.subscribe(response => this.updateLibraryStats(response))
     this.songStatsService.artistStats.subscribe(response => this.updateArtistStats(response))
     this.songStatsService.trackStats.subscribe(response => this.updateTrackStats(response))
+    this.graphControlService.graphControls.subscribe(response => this.updateControls(response))
+  }
+
+  updateControls(controls: GraphControls){
+    this.graphControls = controls
+    this.updateStats()
   }
 
   ngOnChanges(changes: SimpleChange) {
@@ -104,9 +71,8 @@ export class GraphViewComponent implements OnInit {
 
 
   updateStats(){
-    let mapFunc: (v: ArtistStats, k: number) => number
+    let mapFunc: (v: ArtistStats | TrackStats) => number
     let label: string
-    let chartXValues = new Array()
 
     let stats: ArtistStats[] | TrackStats[]
     switch(this.graphControls.categortyType) {
@@ -143,8 +109,7 @@ export class GraphViewComponent implements OnInit {
         break;
       }
     }
-
-    stats.sort((a: ArtistStats | TrackStats, b: ArtistStats | TrackStats) => (mapFunc(a, 0) > mapFunc(b, 0)) ? this.graphControls.sortDirection: -1 * this.graphControls.sortDirection)
+    stats.sort((a: ArtistStats | TrackStats, b: ArtistStats | TrackStats) => (mapFunc(a) > mapFunc(b)) ? this.graphControls.sortDirection: -1 * this.graphControls.sortDirection)
     this.chartYValues = Array.from(stats, mapFunc)
     this.chartXValues = Array.from(stats, (entry) => entry.name)
     this.chartData = [{data: this.chartYValues, label: label}]

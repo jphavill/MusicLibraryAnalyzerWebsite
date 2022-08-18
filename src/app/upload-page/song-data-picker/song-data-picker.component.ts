@@ -16,6 +16,7 @@ export class SongDataPickerComponent implements OnInit {
   constructor(private songStatsService: SongStatsService) { }
 
   ngOnInit(): void {
+    this.songStatsService.library.subscribe(response => this.neverSelected = response.length == 0)
   }
 
   updateLoading(value: boolean): void{

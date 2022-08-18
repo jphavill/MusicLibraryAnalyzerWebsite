@@ -21,11 +21,9 @@ export class PlistLoaderService {
   //       let tracks:Tracks = JSON.parse(JSON.stringify(obj));
   //       for (let key of Object.keys(tracks.Tracks)) {
   //         let trackstats:TrackStats = initTrackStats(tracks.Tracks[key]);
-  //         console.log(trackstats);
   //       };
   //     }
   //   }
-
   //   return library;
   //   };
 }
