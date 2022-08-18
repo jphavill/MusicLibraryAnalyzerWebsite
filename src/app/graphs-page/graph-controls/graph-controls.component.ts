@@ -48,8 +48,8 @@ export class GraphControlsComponent implements OnInit {
         end: new Date(this.libraryStats[0].lastDate)
       }
     )
-    this.dateMin = new Date(this.libraryStats[0].firstDate)
-    this.dateMax = new Date(this.libraryStats[0].lastDate)
+    this.dateMin = this.range.value.start
+    this.dateMax = this.range.value.end
   }
 
   ngOnInit(): void {
@@ -57,9 +57,12 @@ export class GraphControlsComponent implements OnInit {
     if (this.libraryStats.length > 0){
       this.setDefaultDate()
     }
+    this.updateControls()
   }
 
   updateControls(): void {
+    this.dateMin = this.range.value.start
+    this.dateMax = this.range.value.end
     this.graphControlService.sendControls(
       {
         dataType: this.dataType,

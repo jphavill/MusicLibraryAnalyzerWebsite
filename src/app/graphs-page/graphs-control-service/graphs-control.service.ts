@@ -12,7 +12,9 @@ export class GraphsControlService {
 
   constructor() { }
 
-  sendControls(library: GraphControls){
-    this._graphControls.next(library)
+  sendControls(controls: GraphControls){
+    console.log("sending new controls")
+    console.log(controls)
+    this._graphControls.next(controls)
   }
 }
