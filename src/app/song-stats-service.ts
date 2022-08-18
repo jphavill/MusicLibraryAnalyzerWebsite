@@ -24,7 +24,7 @@ export class SongStatsService implements OnInit{
   private graphControls: GraphControls = graphControlsDefault
 
   constructor(private graphControlsService: GraphsControlService) {
-    console.log("intining")
+
     this.graphControlsService.graphControls.subscribe(response => this.updateGraphControls(response))
   }
 
@@ -51,7 +51,6 @@ export class SongStatsService implements OnInit{
 
   updateGraphControls(graphControls: GraphControls){
     this.graphControls = graphControls
-    console.log(graphControls)
     this.updateLibraryStats(this.library.getValue())
   }
 

@@ -13,8 +13,6 @@ export class GraphsControlService {
   constructor() { }
 
   sendControls(controls: GraphControls){
-    console.log("sending new controls")
-    console.log(controls)
     this._graphControls.next(controls)
   }
 }
