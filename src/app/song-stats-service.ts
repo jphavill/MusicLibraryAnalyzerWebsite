@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Track } from 'models/library.model';
 import { ArtistStats, LibraryStats, TrackStats } from 'models/stat.model';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -56,6 +56,7 @@ export class SongStatsService {
     // Song Stats
 
     library.forEach(track => {
+
       let skip: boolean = track.msPlayed < 5000
       totalTime = totalTime + track.msPlayed;
       // if the track was played for less than 5 seconds it is considered skipped

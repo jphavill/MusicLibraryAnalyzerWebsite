@@ -1,9 +1,10 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { graphCategory, GraphControls, graphDataType, sortDirection } from 'models/graphSelections';
+import { graphCategory, graphDataType, sortDirection } from 'models/graphSelections';
 
 import { SongStatsService } from 'app/song-stats-service';
 import { LibraryStats } from 'models/stat.model'
+import { GraphsControlService } from '../graphs-control-service/graphs-control.service';
 
 @Component({
   selector: 'app-graph-controls',
@@ -28,9 +29,6 @@ export class GraphControlsComponent implements OnInit {
   dataTypes = graphDataType;
   percent: boolean = false;
 
-  @Output() graphControlsEvent = new EventEmitter<GraphControls>();
-
-
   categoriesKeys = Object.keys(this.categories);
   categoriesValues = Object.values(graphCategory)
   dataTypesKeys = Object.keys(this.dataTypes);
@@ -40,7 +38,7 @@ export class GraphControlsComponent implements OnInit {
   categoryType: graphCategory = graphCategory.Artist
   dataType: graphDataType = graphDataType.Plays
 
-  constructor(private songStatsService: SongStatsService) {
+  constructor(private songStatsService: SongStatsService, private graphControlService: GraphsControlService) {
   }
 
   setDefaultDate(){
@@ -62,7 +60,7 @@ export class GraphControlsComponent implements OnInit {
   }
 
   updateControls(): void {
-    this.graphControlsEvent.emit(
+    this.graphControlService.sendControls(
       {
         dataType: this.dataType,
         categortyType: this.categoryType,
