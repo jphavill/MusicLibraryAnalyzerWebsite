@@ -1,4 +1,4 @@
-import { ChartScales } from "chart.js";
+import { ChartOptions, ChartScales } from "chart.js";
 
 export const scales: ChartScales = {
     xAxes: [
@@ -31,7 +31,7 @@ export const scales: ChartScales = {
   ]
   }
 
-export const chartOptions = {
+export const chartOptions: ChartOptions = {
   responsive: true,
   scales: scales,
   maintainAspectRatio: false,
@@ -40,5 +40,10 @@ export const chartOptions = {
     labels: {
       fontColor: 'white'
     }
-   }
+   },
 };
+
+export interface ChartElement {
+  _index: number
+}
+

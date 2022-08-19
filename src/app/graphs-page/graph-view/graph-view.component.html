@@ -1,13 +1,26 @@
-<div style="width: 90%;position: relative" [style.height.px]="chartHeight" *ngIf="chartData.length > 0 && chartData[0].data.length > 0;else no_graph">
-  <canvas
-    baseChart
-    [chartType]="'horizontalBar'"
-    [legend]="true"
-    [datasets]="chartData"
-    [labels]="chartXValues"
-    [options]="chartOptions"
-  >
-  </canvas>
+<div *ngIf="chartData.length > 0 && chartData[0].data.length > 0;else no_graph">
+
+  <div  class="selected-info mat-elevation-z8 mat-card"*ngIf="!isMobileLayout">
+    <div *ngIf="selectedIndex >= 0; else elseBlock">
+      <p>Name: {{stats[selectedIndex].name}}</p>
+      <p>Plays: {{stats[selectedIndex].totalPlays}}</p>
+      <p>Skips: {{stats[selectedIndex].totalSkips}}</p>
+      <p>Time: {{stats[selectedIndex].totalTime | milliFormat}}</p>
+    </div>
+    <ng-template #elseBlock><p><i>Click on the graph to view detailed stats on a single element</i></p></ng-template>
+  </div>
+  <div style="width: 90%;position: relative" [style.height.px]="chartHeight">
+    <canvas
+      baseChart
+      [chartType]="'horizontalBar'"
+      [legend]="true"
+      [datasets]="chartData"
+      [labels]="chartXValues"
+      [options]="chartOptions"
+    >
+    </canvas>
+  </div>
+
 </div>
 
 <ng-template #no_graph><a mat-raised-button color="primary" routerLink="" class="text_spacer">Upload a Library</a></ng-template>
