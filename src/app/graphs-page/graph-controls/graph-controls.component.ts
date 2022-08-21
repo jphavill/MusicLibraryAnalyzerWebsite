@@ -1,9 +1,10 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { graphCategory, GraphControls, graphDataType, sortDirection } from 'models/graphSelections';
+import { graphCategory, graphDataType, sortDirection } from 'models/graphSelections';
 
 import { SongStatsService } from 'app/song-stats-service';
 import { LibraryStats } from 'models/stat.model'
+import { GraphsControlService } from '../graphs-control-service/graphs-control.service';
 
 @Component({
   selector: 'app-graph-controls',
@@ -28,9 +29,6 @@ export class GraphControlsComponent implements OnInit {
   dataTypes = graphDataType;
   percent: boolean = false;
 
-  @Output() graphControlsEvent = new EventEmitter<GraphControls>();
-
-
   categoriesKeys = Object.keys(this.categories);
   categoriesValues = Object.values(graphCategory)
   dataTypesKeys = Object.keys(this.dataTypes);
@@ -40,7 +38,7 @@ export class GraphControlsComponent implements OnInit {
   categoryType: graphCategory = graphCategory.Artist
   dataType: graphDataType = graphDataType.Plays
 
-  constructor(private songStatsService: SongStatsService) {
+  constructor(private songStatsService: SongStatsService, private graphControlService: GraphsControlService) {
   }
 
   setDefaultDate(){
@@ -50,8 +48,8 @@ export class GraphControlsComponent implements OnInit {
         end: new Date(this.libraryStats[0].lastDate)
       }
     )
-    this.dateMin = new Date(this.libraryStats[0].firstDate)
-    this.dateMax = new Date(this.libraryStats[0].lastDate)
+    this.dateMin = this.range.value.start
+    this.dateMax = this.range.value.end
   }
 
   ngOnInit(): void {
@@ -59,10 +57,13 @@ export class GraphControlsComponent implements OnInit {
     if (this.libraryStats.length > 0){
       this.setDefaultDate()
     }
+    this.updateControls()
   }
 
   updateControls(): void {
-    this.graphControlsEvent.emit(
+    this.dateMin = this.range.value.start
+    this.dateMax = this.range.value.end
+    this.graphControlService.sendControls(
       {
         dataType: this.dataType,
         categortyType: this.categoryType,

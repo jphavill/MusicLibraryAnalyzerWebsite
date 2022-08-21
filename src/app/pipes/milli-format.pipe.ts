@@ -11,6 +11,6 @@ export class MilliFormatPipe implements PipeTransform {
     let hours: number = Math.floor((value / (1000 * 60 * 60) % 24));
     let days: number = Math.floor((value / (1000 * 60 * 60 * 24)));
 
-    return `${days} days, ${hours} hours, ${minutes} minutes, ${seconds} seconds`;
+    return `${days} days, ${hours} hours, ${minutes} mins, ${seconds} secs`;
   }
 }

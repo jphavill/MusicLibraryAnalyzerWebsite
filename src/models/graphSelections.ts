@@ -24,3 +24,11 @@ export enum sortDirection{
   descending = -1
 };
 
+export const graphControlsDefault: GraphControls = {
+  dataType: graphDataType.Plays,
+  categortyType: graphCategory.Artist,
+  percent: false,
+  dateMin: new Date(),
+  dateMax: new Date(),
+  sortDirection: sortDirection.descending
+}
