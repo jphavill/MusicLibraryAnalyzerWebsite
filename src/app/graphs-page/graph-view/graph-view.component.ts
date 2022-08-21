@@ -1,9 +1,10 @@
 import { Component, OnInit, SimpleChange } from '@angular/core';
 import { SongStatsService } from 'app/song-stats-service';
+import { ChartElementsOptions, ChartOptions } from 'chart.js';
 import { graphCategory, GraphControls, graphControlsDefault, graphDataType } from 'models/graphSelections';
 import { LibraryStats, ArtistStats, TrackStats } from 'models/stat.model'
 import { GraphsControlService } from '../graphs-control-service/graphs-control.service';
-import { chartOptions } from './graphSettings';
+import { ChartElement, chartOptions } from './graphSettings';
 
 @Component({
   selector: 'app-graph-view',
@@ -31,9 +32,14 @@ export class GraphViewComponent implements OnInit {
     },
   ];
 
-  chartOptions = chartOptions
+  chartOptions: ChartOptions = chartOptions
 
   artistLabels: Array<string> = Array()
+
+  selectedIndex: number = -1
+  isMobileLayout: boolean = false
+
+  stats: ArtistStats[] | TrackStats[] = Array()
 
 
   constructor(private songStatsService: SongStatsService, private graphControlService: GraphsControlService) {}
@@ -43,7 +49,18 @@ export class GraphViewComponent implements OnInit {
     this.songStatsService.artistStats.subscribe(response => this.updateArtistStats(response))
     this.songStatsService.trackStats.subscribe(response => this.updateTrackStats(response))
     this.graphControlService.graphControls.subscribe(response => this.updateControls(response))
+
+    this.chartOptions.onClick = (event: PointerEvent, active: Array<ChartElement> ) => { this.updateSelected(active) }
+    window.onresize = () => this.isMobileLayout = window.innerWidth < 1050;
   }
+
+  updateSelected( active: Array<ChartElement>){
+    if (active.length > 0){
+      this.selectedIndex = active[0]._index
+    }
+  }
+
+
 
   updateControls(controls: GraphControls){
     this.graphControls = controls
@@ -110,10 +127,12 @@ export class GraphViewComponent implements OnInit {
       }
     }
     stats.sort((a: ArtistStats | TrackStats, b: ArtistStats | TrackStats) => (mapFunc(a) > mapFunc(b)) ? this.graphControls.sortDirection: -1 * this.graphControls.sortDirection)
+    this.stats = stats
     this.chartYValues = Array.from(stats, mapFunc)
     this.chartXValues = Array.from(stats, (entry) => entry.name)
     this.chartData = [{data: this.chartYValues, label: label}]
     this.chartHeight = this.chartYValues.length * 20 + 70
+    this.selectedIndex = -1
   }
 
 }
