@@ -22,5 +22,4 @@ export class SongStatsComponent implements OnInit {
     this.songStatsService.library.subscribe(response => this.library = this.songStatsService.updateLibraryStats(response))
     this.songStatsService.libraryStats.subscribe(response => this.libraryStats = response)
   }
-
 }

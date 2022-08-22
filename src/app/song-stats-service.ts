@@ -70,6 +70,7 @@ export class SongStatsService implements OnInit{
     let tempArtistStats = new Map<string, ArtistStats>()
     let tempTrackStats = new Map<string, TrackStats>()
 
+
     // Song Stats
     library = library.filter((track: Track) => (new Date(track.endTime) >= this.graphControls.dateMin) && (new Date(track.endTime) <= this.graphControls.dateMax))
     library.forEach(track => {
