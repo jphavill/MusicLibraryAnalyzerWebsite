@@ -6,7 +6,6 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class GraphsControlService {
-
   private _graphControls: BehaviorSubject<GraphControls> = new BehaviorSubject(graphControlsDefault);
   public readonly graphControls: BehaviorSubject<GraphControls> = this._graphControls;
 
