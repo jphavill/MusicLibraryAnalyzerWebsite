@@ -28,7 +28,7 @@
     <mat-icon>{{sortDirection == 1 ? 'arrow_upward' : 'arrow_downward'}}</mat-icon>
   </button>
 
-  <mat-slide-toggle class="graph-percentage" [(ngModel)]="percent" (change)="updateControls()">Percentage</mat-slide-toggle>
+  <mat-slide-toggle class="graph-percentage" [(ngModel)]="percent" (change)="updateControls()" [disabled] = "percentDisabled">Percentage</mat-slide-toggle>
 
 </div>
 

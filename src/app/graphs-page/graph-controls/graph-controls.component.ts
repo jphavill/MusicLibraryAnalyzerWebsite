@@ -26,10 +26,11 @@ export class GraphControlsComponent implements OnInit {
   defaultDateMax: Date = new Date()
   sortDirection = sortDirection.descending
 
-
   categories = graphCategory;
   dataTypes = graphDataType;
   percent: boolean = false;
+  percentDisabled: boolean = true;
+
 
   categoriesKeys = Object.keys(this.categories);
   categoriesValues = Object.values(graphCategory)
@@ -63,6 +64,13 @@ export class GraphControlsComponent implements OnInit {
   }
 
   updateControls(): void {
+    // skips-per-play as a percentage isn't a valid mathmatical statistic
+    if (this.dataType == graphDataType.SkipsPerPlay){
+      this.percent = false
+      this.percentDisabled = true
+    } else {
+      this.percentDisabled = false
+    }
     this.dateMin = this.range.value.start
     this.dateMax = this.range.value.end
     this.graphControlService.sendControls(
