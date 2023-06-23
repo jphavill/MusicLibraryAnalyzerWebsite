@@ -22,6 +22,8 @@ export class GraphControlsComponent implements OnInit {
 
   dateMin: Date = new Date()
   dateMax: Date = new Date()
+  defaultDateMin: Date = new Date()
+  defaultDateMax: Date = new Date()
   sortDirection = sortDirection.descending
 
 
@@ -48,8 +50,8 @@ export class GraphControlsComponent implements OnInit {
         end: new Date(this.libraryStats[0].lastDate)
       }
     )
-    this.dateMin = this.range.value.start
-    this.dateMax = this.range.value.end
+    this.defaultDateMin = this.range.value.start
+    this.defaultDateMax = this.range.value.end
   }
 
   ngOnInit(): void {

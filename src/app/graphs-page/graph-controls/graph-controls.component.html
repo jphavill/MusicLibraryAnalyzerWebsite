@@ -15,7 +15,7 @@
 
   <mat-form-field appearance="fill" class="graph-data-range">
     <mat-label>Date Range</mat-label>
-    <mat-date-range-input [min]="dateMin" [max]="dateMax" [rangePicker]="picker" [formGroup]="range">
+    <mat-date-range-input [min]="defaultDateMin" [max]="defaultDateMax" [rangePicker]="picker" [formGroup]="range">
       <input matStartDate formControlName="start" placeholder="Start date">
       <input matEndDate formControlName="end" placeholder="End date" (dateChange)="updateControls()">
     </mat-date-range-input>
