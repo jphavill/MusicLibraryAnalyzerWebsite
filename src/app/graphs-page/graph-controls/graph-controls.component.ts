@@ -5,7 +5,6 @@ import { GraphControls, graphCategory, graphDataType, sortDirection } from 'mode
 import { SongStatsService } from 'app/song-stats-service';
 import { LibraryStats } from 'models/stat.model'
 import { GraphsControlService } from '../graphs-control-service/graphs-control.service';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-graph-controls',
@@ -38,7 +37,6 @@ export class GraphControlsComponent implements OnInit {
   dataTypesKeys = Object.keys(this.dataTypes);
   dataTypesValues = Object.values(graphDataType)
 
-  // graph defaults to displaying how many plays each artist had
   categoryType: graphCategory = graphCategory.Artist
   dataType: graphDataType = graphDataType.Plays
 
@@ -46,14 +44,8 @@ export class GraphControlsComponent implements OnInit {
   }
 
   setDefaultDate(){
-    this.range.patchValue(
-      {
-        start: new Date(this.libraryStats[0].firstDate),
-        end: new Date(this.libraryStats[0].lastDate)
-      }
-    )
-    this.defaultDateMin = this.range.value.start
-    this.defaultDateMax = this.range.value.end
+    this.defaultDateMin = new Date(this.libraryStats[0].firstDate)
+    this.defaultDateMax = new Date(this.libraryStats[0].lastDate)
   }
 
   ngOnInit(): void {
@@ -67,20 +59,20 @@ export class GraphControlsComponent implements OnInit {
     this.dataType = controls.dataType
     this.categoryType = controls.categortyType
     this.percent = controls.percent
+    this.setDefaultDate()
     if (controls.dateMax.getDate() == controls.dateMin.getDate() && controls.dateMax.getDate() == new Date().getDate() && this.libraryStats.length > 0){
-      this.setDefaultDate()
       this.dateMin = this.defaultDateMin
       this.dateMax = this.defaultDateMax
     } else {
       this.dateMin = controls.dateMin
       this.dateMax = controls.dateMax
-      this.range.patchValue(
-        {
-          start: this.dateMin,
-          end: this.dateMax
-        }
-      )
     }
+    this.range.patchValue(
+      {
+        start: this.dateMin,
+        end: this.dateMax
+      }
+    )
     this.sortDirection = controls.sortDirection
   }
 
