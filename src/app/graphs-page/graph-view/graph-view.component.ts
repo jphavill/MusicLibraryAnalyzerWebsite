@@ -51,12 +51,12 @@ export class GraphViewComponent implements OnInit {
 
     this.graphControlService.graphControls.subscribe(response => this.updateControls(response))
     this.updateStats()
-
-    this.chartOptions.onClick = (event: PointerEvent, active: Array<ChartElement> ) => { this.updateSelected(active) }
     window.onresize = () => this.isMobileLayout = window.innerWidth < 1050;
   }
 
   updateSelected( active: Array<ChartElement>){
+    console.log("looking for update")
+    console.log(active.length)
     if (active.length > 0){
       this.selectedIndex = active[0]._index
     }
@@ -137,6 +137,8 @@ export class GraphViewComponent implements OnInit {
     } else {
       this.chartOptions = chartOptions
     }
+
+    this.chartOptions.onClick = (event: PointerEvent, active: Array<ChartElement> ) => { this.updateSelected(active) }
 
     stats.sort((a: ArtistStats | TrackStats, b: ArtistStats | TrackStats) => (mapFunc(a) > mapFunc(b)) ? this.graphControls.sortDirection: -1 * this.graphControls.sortDirection)
     this.stats = stats
