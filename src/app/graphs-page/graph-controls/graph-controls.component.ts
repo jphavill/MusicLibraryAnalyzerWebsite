@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { graphCategory, graphDataType, sortDirection } from 'models/graphSelections';
+import { GraphControls, graphCategory, graphDataType, sortDirection } from 'models/graphSelections';
 
 import { SongStatsService } from 'app/song-stats-service';
 import { LibraryStats } from 'models/stat.model'
 import { GraphsControlService } from '../graphs-control-service/graphs-control.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-graph-controls',
@@ -57,10 +58,30 @@ export class GraphControlsComponent implements OnInit {
 
   ngOnInit(): void {
     this.songStatsService.libraryStats.subscribe(response => this.libraryStats = response)
-    if (this.libraryStats.length > 0){
-      this.setDefaultDate()
-    }
+    let controlsSub = this.graphControlService.graphControls.subscribe(response => this.setControls(response))
+    controlsSub.unsubscribe()
     this.updateControls()
+  }
+
+  setControls(controls: GraphControls): void {
+    this.dataType = controls.dataType
+    this.categoryType = controls.categortyType
+    this.percent = controls.percent
+    if (controls.dateMax.getDate() == controls.dateMin.getDate() && controls.dateMax.getDate() == new Date().getDate() && this.libraryStats.length > 0){
+      this.setDefaultDate()
+      this.dateMin = this.defaultDateMin
+      this.dateMax = this.defaultDateMax
+    } else {
+      this.dateMin = controls.dateMin
+      this.dateMax = controls.dateMax
+      this.range.patchValue(
+        {
+          start: this.dateMin,
+          end: this.dateMax
+        }
+      )
+    }
+    this.sortDirection = controls.sortDirection
   }
 
   updateControls(): void {

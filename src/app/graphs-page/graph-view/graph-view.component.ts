@@ -48,8 +48,8 @@ export class GraphViewComponent implements OnInit {
     this.songStatsService.libraryStats.subscribe(response => this.updateLibraryStats(response))
     this.songStatsService.artistStats.subscribe(response => this.updateArtistStats(response))
     this.songStatsService.trackStats.subscribe(response => this.updateTrackStats(response))
-    this.graphControlService.graphControls.subscribe(response => this.updateControls(response))
 
+    this.graphControlService.graphControls.subscribe(response => this.updateControls(response))
     this.updateStats()
 
     this.chartOptions.onClick = (event: PointerEvent, active: Array<ChartElement> ) => { this.updateSelected(active) }
