@@ -15,7 +15,7 @@
 
   <mat-form-field appearance="fill" class="graph-data-range">
     <mat-label>Date Range</mat-label>
-    <mat-date-range-input [min]="dateMin" [max]="dateMax" [rangePicker]="picker" [formGroup]="range">
+    <mat-date-range-input [min]="defaultDateMin" [max]="defaultDateMax" [rangePicker]="picker" [formGroup]="range">
       <input matStartDate formControlName="start" placeholder="Start date">
       <input matEndDate formControlName="end" placeholder="End date" (dateChange)="updateControls()">
     </mat-date-range-input>
@@ -24,11 +24,11 @@
     <mat-date-range-picker #picker></mat-date-range-picker>
   </mat-form-field>
 
-  <mat-slide-toggle class="graph-percentage" [(ngModel)]="percent" (change)="updateControls()">Percentage</mat-slide-toggle>
-
-  <button mat-mini-fab color="basic" (click)="toggleSort()">
+  <button mat-mini-fab color="basic" (click)="toggleSort()" class="graph-percent">
     <mat-icon>{{sortDirection == 1 ? 'arrow_upward' : 'arrow_downward'}}</mat-icon>
   </button>
+
+  <mat-slide-toggle class="graph-percentage" [(ngModel)]="percent" (change)="updateControls()" [disabled] = "percentDisabled">Percentage</mat-slide-toggle>
 
 </div>
 

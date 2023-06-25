@@ -4,9 +4,10 @@
       [mode]="(isHandset$ | async) ? 'over' : 'side'"
       >
     <mat-toolbar>Menu</mat-toolbar>
-    <mat-nav-list>
+    <mat-nav-list (click)="drawer.close()">
       <a mat-list-item routerLink="">Upload and Summary</a>
       <a mat-list-item routerLink="graph">Graphing</a>
+      <a mat-list-item routerLink="faq">FAQ</a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>

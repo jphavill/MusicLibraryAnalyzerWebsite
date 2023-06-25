@@ -22,7 +22,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatDatepickerModule} from '@angular/material/datepicker';
-
+import {MatExpansionModule} from '@angular/material/expansion';
 import { SongDataPickerComponent } from './upload-page/song-data-picker/song-data-picker.component';
 import { SongStatsComponent } from './upload-page/song-stats/song-stats.component';
 import { GraphControlsComponent } from './graphs-page/graph-controls/graph-controls.component';
@@ -32,6 +32,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { GraphViewComponent } from './graphs-page/graph-view/graph-view.component';
 
 import { ChartsModule } from 'ng2-charts';
+import { FaqPageComponent } from './faq-page/faq-page.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { ChartsModule } from 'ng2-charts';
     routingComponents,
     GraphControlsComponent,
     GraphViewComponent,
+    FaqPageComponent,
   ],
   imports: [
     BrowserModule,
@@ -62,6 +64,7 @@ import { ChartsModule } from 'ng2-charts';
     MatFormFieldModule,
     MatNativeDateModule,
     MatSelectModule,
+    MatExpansionModule,
     FormsModule,
     ReactiveFormsModule,
     ChartsModule,

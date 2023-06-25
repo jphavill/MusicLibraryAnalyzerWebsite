@@ -4,7 +4,7 @@ import { ChartElementsOptions, ChartOptions } from 'chart.js';
 import { graphCategory, GraphControls, graphControlsDefault, graphDataType } from 'models/graphSelections';
 import { LibraryStats, ArtistStats, TrackStats } from 'models/stat.model'
 import { GraphsControlService } from '../graphs-control-service/graphs-control.service';
-import { ChartElement, chartOptions } from './graphSettings';
+import { ChartElement, chartOptions, chartOptionsPercent } from './graphSettings';
 
 @Component({
   selector: 'app-graph-view',
@@ -48,13 +48,15 @@ export class GraphViewComponent implements OnInit {
     this.songStatsService.libraryStats.subscribe(response => this.updateLibraryStats(response))
     this.songStatsService.artistStats.subscribe(response => this.updateArtistStats(response))
     this.songStatsService.trackStats.subscribe(response => this.updateTrackStats(response))
-    this.graphControlService.graphControls.subscribe(response => this.updateControls(response))
 
-    this.chartOptions.onClick = (event: PointerEvent, active: Array<ChartElement> ) => { this.updateSelected(active) }
+    this.graphControlService.graphControls.subscribe(response => this.updateControls(response))
+    this.updateStats()
     window.onresize = () => this.isMobileLayout = window.innerWidth < 1050;
   }
 
   updateSelected( active: Array<ChartElement>){
+    console.log("looking for update")
+    console.log(active.length)
     if (active.length > 0){
       this.selectedIndex = active[0]._index
     }
@@ -126,9 +128,21 @@ export class GraphViewComponent implements OnInit {
         break;
       }
     }
+
+    label = this.graphControls.percent ? "% of All " + label : label
+    let totalToDivide: number
+    if (this.graphControls.percent) {
+      this.chartOptions = chartOptionsPercent
+      totalToDivide =  Array.from(stats, mapFunc).reduce((totalToDivide, current) => totalToDivide + current)
+    } else {
+      this.chartOptions = chartOptions
+    }
+
+    this.chartOptions.onClick = (event: PointerEvent, active: Array<ChartElement> ) => { this.updateSelected(active) }
+
     stats.sort((a: ArtistStats | TrackStats, b: ArtistStats | TrackStats) => (mapFunc(a) > mapFunc(b)) ? this.graphControls.sortDirection: -1 * this.graphControls.sortDirection)
     this.stats = stats
-    this.chartYValues = Array.from(stats, mapFunc)
+    this.chartYValues = this.graphControls.percent? Array.from(stats, mapFunc).map((entry) => entry / totalToDivide * 100) : Array.from(stats, mapFunc)
     this.chartXValues = Array.from(stats, (entry) => entry.name)
     this.chartData = [{data: this.chartYValues, label: label}]
     this.chartHeight = this.chartYValues.length * 20 + 70
