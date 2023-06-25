@@ -1,9 +1,10 @@
 import { Component, OnInit, Output } from '@angular/core';
 
-import {Track} from 'models/library.model';
+import {Demo, Track} from 'models/library.model';
 
 import { SongStatsService } from 'app/song-stats-service';
 import { EventEmitter } from '@angular/core';
+import demoData from '../../../assets/json/demoSpotify.json'
 
 @Component({
   selector: 'app-song-data-picker',
@@ -23,37 +24,63 @@ export class SongDataPickerComponent implements OnInit {
     this.loadingEvent.emit(value);
   }
 
-  uploadSongs(e:Event): void{
+  uploadSongs(file:File): void{
     this.updateSongs(Array())
     this.updateLoading(true)
     this.neverSelected = false;
-    this.loadSongs(e).then((library:Track[]) => this.updateSongs(library))
+    this.loadSongs(file).then((library:Track[]) => this.updateSongs(library))
   }
 
-  async loadSongs(e:Event): Promise<Track[]>{
+  getSelectedFile(e:Event): File {
     let event:HTMLInputElement = (e.target as HTMLInputElement)
-    let file:File = event.files![0]; // gets the first file selected
-    let library: Track[] = await this.loadSpotify(file); // awaits the file being loaded and parsed to json
+    let file:File = event.files![0];
+    return file
+  }
+
+  loadDemoSongs(): void {
+    let library:Track[] = new Array()
+    let data: Demo[] = demoData
+    for (var song of data){
+      let tempSong:Track ={
+        "endTime": new Date(song.endTime),
+        "artistName": song.artistName,
+        "trackName": song.trackName,
+        "msPlayed": song.msPlayed
+      }
+      library.push(tempSong)
+    }
+    this.updateSongs(library)
+  }
+
+  loadUserSongs(e:Event): void {
+    let file: File = this.getSelectedFile(e)
+    this.uploadSongs(file)
+  }
+
+  async loadSongs(file:File): Promise<Track[]>{
+    let library: Track[] = await this.loadSpotify(file);
+    console.log(library)
     return library;
   }
 
   updateSongs(library: Track[]){
     this.songStatsService.sendLibrary(library)
+    console.log("sent songs")
     this.updateLoading(false)
   }
 
 
-  async loadSpotify(file: File): Promise<Track[]>{ // loads the file and returns it parsed as json
+  async loadSpotify(file: File): Promise<Track[]>{
     return new Promise<Track[]> (
       (resolve, reject) => {
         let fr:FileReader = new FileReader();
         let library:Track[] = new Array()
 
-        fr.readAsText(file) // read the file
-        fr.onload = () => { // when the file is read
-          let contents:string = fr.result as string // reads in the file as text first
+        fr.readAsText(file)
+        fr.onload = () => {
+          let contents:string = fr.result as string
           library = JSON.parse(contents);
-          resolve(library); // since it is done succesfully resolve the promise
+          resolve(library);
         }
       }
     )

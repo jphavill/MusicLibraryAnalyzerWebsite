@@ -1,0 +1,73 @@
+
+<div class="faq-answers">
+  <h1 class="faq-title">Frequently Asked Questions</h1>
+  <mat-accordion>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          What type of data does this site analzye?
+        </mat-panel-title>
+        <mat-panel-description>
+          Spotify listening history
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <p>Spotify allows you to request and download your past listening history. This comes in the form of a number of JSON files which list every time
+        you have stopped and started a song, along with other data. Spotify has instructions on how to request this data <a href="https://support.spotify.com/us/article/data-rights-and-privacy-settings/">here</a>.
+        The site also comes with demo data availble to try it out, and examples of what types of analysis is possible <a href="https://github.com/jphavill/MusicLibraryAnalyzerWebsite">here</a>.
+      </p>
+    </mat-expansion-panel>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          How do I navigate the site?
+        </mat-panel-title>
+        <mat-panel-description>
+          Open the side bar with the hamburger menu in the top left
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <p>While there are direct links from page to page for common actions (Like the one to this page from the main page) you can also go to any page of the site
+        at any time by opening the side bar and choosing a page to navigate to. The side bar is opened with the button marked by three horizontal lines, just to the left of the title.
+      </p>
+    </mat-expansion-panel>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Does my data get sent anywhere while the site is analzying it?
+        </mat-panel-title>
+        <mat-panel-description>
+          No! Your data never leaves your computer
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <p>All analysis of the data is done locally on your own computer. Analysis is done using code written in typescript, meaning it runs directly in your browser.
+        Your data doesn't get sent to a server, and no copy of it is ever made or stored anywhere but your computer. </p>
+    </mat-expansion-panel>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          How does is it determined if I "skip" a song?
+        </mat-panel-title>
+        <mat-panel-description>
+          If you listen to a song for less than 5 seconds
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <p>Spotify data records both the time you start a song, and the time you stop listening to a song. If those times are within 5 seconds of each other it is counted as a skip.
+        Currently this is an arbitrarely chosen metric. In the future the plan is to include a slider which allows a user to select the threshold for a skip.
+      </p>
+    </mat-expansion-panel>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          What is the SkipsPerPlay metric?
+        </mat-panel-title>
+        <mat-panel-description>
+          The ratio of how often you skip a song vs play it
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <p>This metric stems from a personal need. I found that I had a lot of songs in my library that I didn't actually enjoy listening to.
+        I figured this metric would be an easy way to filter out which songs I enjoyed listening to, versus those I didn't. The higher the ratio,
+        the more often I skip a song and the less I like it.
+      </p>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>
+

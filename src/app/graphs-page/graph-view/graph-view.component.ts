@@ -1,8 +1,10 @@
-import { Component, Input, OnInit, SimpleChange } from '@angular/core';
+import { Component, OnInit, SimpleChange } from '@angular/core';
 import { SongStatsService } from 'app/song-stats-service';
-import { graphCategory, GraphControls, graphDataType, sortDirection } from 'models/graphSelections';
+import { ChartElementsOptions, ChartOptions } from 'chart.js';
+import { graphCategory, GraphControls, graphControlsDefault, graphDataType } from 'models/graphSelections';
 import { LibraryStats, ArtistStats, TrackStats } from 'models/stat.model'
-import { chartOptions } from './graphSettings';
+import { GraphsControlService } from '../graphs-control-service/graphs-control.service';
+import { ChartElement, chartOptions, chartOptionsPercent } from './graphSettings';
 
 @Component({
   selector: 'app-graph-view',
@@ -19,14 +21,7 @@ export class GraphViewComponent implements OnInit {
 
   chartHeight: number = 0
 
-  @Input() graphControls: GraphControls = {
-    dataType: graphDataType.Plays,
-    categortyType: graphCategory.Artist,
-    percent: false,
-    dateMin: new Date(),
-    dateMax: new Date(),
-    sortDirection: sortDirection.descending
-  }
+  graphControls: GraphControls = graphControlsDefault
 
   chartLabels: string[] = Array()
 
@@ -37,17 +32,41 @@ export class GraphViewComponent implements OnInit {
     },
   ];
 
-  chartOptions = chartOptions
+  chartOptions: ChartOptions = chartOptions
 
   artistLabels: Array<string> = Array()
 
+  selectedIndex: number = -1
+  isMobileLayout: boolean = false
 
-  constructor(private songStatsService: SongStatsService) {}
+  stats: ArtistStats[] | TrackStats[] = Array()
+
+
+  constructor(private songStatsService: SongStatsService, private graphControlService: GraphsControlService) {}
 
   ngOnInit(): void {
     this.songStatsService.libraryStats.subscribe(response => this.updateLibraryStats(response))
     this.songStatsService.artistStats.subscribe(response => this.updateArtistStats(response))
     this.songStatsService.trackStats.subscribe(response => this.updateTrackStats(response))
+
+    this.graphControlService.graphControls.subscribe(response => this.updateControls(response))
+    this.updateStats()
+    window.onresize = () => this.isMobileLayout = window.innerWidth < 1050;
+  }
+
+  updateSelected( active: Array<ChartElement>){
+    console.log("looking for update")
+    console.log(active.length)
+    if (active.length > 0){
+      this.selectedIndex = active[0]._index
+    }
+  }
+
+
+
+  updateControls(controls: GraphControls){
+    this.graphControls = controls
+    this.updateStats()
   }
 
   ngOnChanges(changes: SimpleChange) {
@@ -71,9 +90,8 @@ export class GraphViewComponent implements OnInit {
 
 
   updateStats(){
-    let mapFunc: (v: ArtistStats, k: number) => number
+    let mapFunc: (v: ArtistStats | TrackStats) => number
     let label: string
-    let chartXValues = new Array()
 
     let stats: ArtistStats[] | TrackStats[]
     switch(this.graphControls.categortyType) {
@@ -111,11 +129,24 @@ export class GraphViewComponent implements OnInit {
       }
     }
 
-    stats.sort((a: ArtistStats | TrackStats, b: ArtistStats | TrackStats) => (mapFunc(a, 0) > mapFunc(b, 0)) ? this.graphControls.sortDirection: -1 * this.graphControls.sortDirection)
-    this.chartYValues = Array.from(stats, mapFunc)
+    label = this.graphControls.percent ? "% of All " + label : label
+    let totalToDivide: number
+    if (this.graphControls.percent) {
+      this.chartOptions = chartOptionsPercent
+      totalToDivide =  Array.from(stats, mapFunc).reduce((totalToDivide, current) => totalToDivide + current)
+    } else {
+      this.chartOptions = chartOptions
+    }
+
+    this.chartOptions.onClick = (event: PointerEvent, active: Array<ChartElement> ) => { this.updateSelected(active) }
+
+    stats.sort((a: ArtistStats | TrackStats, b: ArtistStats | TrackStats) => (mapFunc(a) > mapFunc(b)) ? this.graphControls.sortDirection: -1 * this.graphControls.sortDirection)
+    this.stats = stats
+    this.chartYValues = this.graphControls.percent? Array.from(stats, mapFunc).map((entry) => entry / totalToDivide * 100) : Array.from(stats, mapFunc)
     this.chartXValues = Array.from(stats, (entry) => entry.name)
     this.chartData = [{data: this.chartYValues, label: label}]
     this.chartHeight = this.chartYValues.length * 20 + 70
+    this.selectedIndex = -1
   }
 
 }

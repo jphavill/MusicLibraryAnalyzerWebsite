@@ -1,12 +1,14 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
+import { GraphControls, graphControlsDefault } from 'models/graphSelections';
 import { Track } from 'models/library.model';
 import { ArtistStats, LibraryStats, TrackStats } from 'models/stat.model';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
+import { GraphsControlService } from './graphs-page/graphs-control-service/graphs-control.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class SongStatsService {
+export class SongStatsService implements OnInit{
   // inital value of empty array since no library loaded
   private _library: BehaviorSubject<Track[]> = new BehaviorSubject(Array());
   private _libraryStats: BehaviorSubject<LibraryStats[]> = new BehaviorSubject(Array());
@@ -18,10 +20,25 @@ export class SongStatsService {
   public readonly libraryStats: BehaviorSubject<LibraryStats[]> = this._libraryStats;
   public readonly artistStats: BehaviorSubject<Map<string, ArtistStats>> = this._artistStats;
   public readonly trackStats: BehaviorSubject<Map<string, TrackStats>> = this._songStats;
-  constructor() { }
 
+  private graphControls: GraphControls = graphControlsDefault
+
+  constructor(private graphControlsService: GraphsControlService) {
+
+    this.graphControlsService.graphControls.subscribe(response => this.updateGraphControls(response))
+  }
+
+
+  ngOnInit(): void {
+
+  }
   // updates all subscribed components with the new library
   sendLibrary(library: Track[]){
+    if (library.length > 0){
+      this.graphControls.dateMin = new Date(library[0].endTime)
+      this.graphControls.dateMax = new Date(library[library.length-1].endTime)
+      this.graphControlsService.sendControls(this.graphControls)
+    }
     this._library.next(library)
   }
 
@@ -35,6 +52,11 @@ export class SongStatsService {
 
   sendTrackStats(songStats: Map<string, TrackStats>){
     this._songStats.next(songStats)
+  }
+
+  updateGraphControls(graphControls: GraphControls){
+    this.graphControls = graphControls
+    this.updateLibraryStats(this.library.getValue())
   }
 
   updateLibraryStats(library: Track[]){
@@ -54,7 +76,7 @@ export class SongStatsService {
     let tempTrackStats = new Map<string, TrackStats>()
 
     // Song Stats
-
+    library = library.filter((track: Track) => (new Date(track.endTime) >= this.graphControls.dateMin) && (new Date(track.endTime) <= this.graphControls.dateMax))
     library.forEach(track => {
       let skip: boolean = track.msPlayed < 5000
       totalTime = totalTime + track.msPlayed;
