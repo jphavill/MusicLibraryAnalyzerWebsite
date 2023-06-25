@@ -34,6 +34,11 @@ export class SongStatsService implements OnInit{
   }
   // updates all subscribed components with the new library
   sendLibrary(library: Track[]){
+    if (library.length > 0){
+      this.graphControls.dateMin = new Date(library[0].endTime)
+      this.graphControls.dateMax = new Date(library[library.length-1].endTime)
+      this.graphControlsService.sendControls(this.graphControls)
+    }
     this._library.next(library)
   }
 

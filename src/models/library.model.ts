@@ -8,3 +8,10 @@ export interface Track {
   "trackName":         string;
   "msPlayed":          number;
 }
+
+export interface Demo {
+  "endTime":           string;
+  "artistName":        string;
+  "trackName":         string;
+  "msPlayed":          number;
+}
