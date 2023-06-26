@@ -1,6 +1,6 @@
 import { Component, OnInit, SimpleChange } from '@angular/core';
 import { SongStatsService } from 'app/song-stats-service';
-import { ChartElementsOptions, ChartOptions } from 'chart.js';
+import { ChartOptions } from 'chart.js';
 import { graphCategory, GraphControls, graphControlsDefault, graphDataType } from 'models/graphSelections';
 import { LibraryStats, ArtistStats, TrackStats } from 'models/stat.model'
 import { GraphsControlService } from '../graphs-control-service/graphs-control.service';
@@ -55,8 +55,6 @@ export class GraphViewComponent implements OnInit {
   }
 
   updateSelected( active: Array<ChartElement>){
-    console.log("looking for update")
-    console.log(active.length)
     if (active.length > 0){
       this.selectedIndex = active[0]._index
     }

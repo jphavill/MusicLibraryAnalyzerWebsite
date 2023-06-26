@@ -22,4 +22,9 @@ describe('GraphViewComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should update stats', () => {
+     component.updateStats()
+     
+  })
 });
