@@ -50,7 +50,6 @@ export class GraphControlsComponent implements OnInit {
 
   ngOnInit(): void {
     this.songStatsService.libraryStats.subscribe(response => this.libraryStats = response)
-    console.log(this.libraryStats)
     let controlsSub = this.graphControlService.graphControls.subscribe(response => this.setControls(response))
     controlsSub.unsubscribe()
     this.updateControls()

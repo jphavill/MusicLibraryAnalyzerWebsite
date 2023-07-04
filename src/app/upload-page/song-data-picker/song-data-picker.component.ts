@@ -41,7 +41,7 @@ export class SongDataPickerComponent implements OnInit {
     let library:Track[] = new Array()
     let data: Demo[] = demoData
     for (var song of data){
-      let tempSong:Track ={
+      let tempSong:Track = {
         "endTime": new Date(song.endTime),
         "artistName": song.artistName,
         "trackName": song.trackName,
@@ -59,13 +59,11 @@ export class SongDataPickerComponent implements OnInit {
 
   async loadSongs(file:File): Promise<Track[]>{
     let library: Track[] = await this.loadSpotify(file);
-    console.log(library)
     return library;
   }
 
   updateSongs(library: Track[]){
     this.songStatsService.sendLibrary(library)
-    console.log("sent songs")
     this.updateLoading(false)
   }
 

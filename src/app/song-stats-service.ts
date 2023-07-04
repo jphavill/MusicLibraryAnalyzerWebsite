@@ -9,13 +9,11 @@ import { GraphsControlService } from './graphs-page/graphs-control-service/graph
   providedIn: 'root'
 })
 export class SongStatsService implements OnInit{
-  // inital value of empty array since no library loaded
   private _library: BehaviorSubject<Track[]> = new BehaviorSubject(Array());
   private _libraryStats: BehaviorSubject<LibraryStats[]> = new BehaviorSubject(Array());
   private _artistStats: BehaviorSubject<Map<string, ArtistStats>> = new BehaviorSubject(new Map<string, ArtistStats>());
   private _songStats: BehaviorSubject<Map<string, TrackStats>> = new BehaviorSubject(new Map<string, TrackStats>());
 
-  // publically accessible data
   public readonly library: BehaviorSubject<Track[]> = this._library;
   public readonly libraryStats: BehaviorSubject<LibraryStats[]> = this._libraryStats;
   public readonly artistStats: BehaviorSubject<Map<string, ArtistStats>> = this._artistStats;
@@ -32,7 +30,7 @@ export class SongStatsService implements OnInit{
   ngOnInit(): void {
 
   }
-  // updates all subscribed components with the new library
+
   sendLibrary(library: Track[]){
     if (library.length > 0){
       this.graphControls.dateMin = new Date(library[0].endTime)
@@ -60,7 +58,6 @@ export class SongStatsService implements OnInit{
   }
 
   updateLibraryStats(library: Track[]){
-    // Library Stats
     let totalTime: number = 0;
     let totalSkips: number = 0;
     let totalPlays: number = library.length;
@@ -71,11 +68,9 @@ export class SongStatsService implements OnInit{
       lastDate = library[library.length-1].endTime;
     }
 
-    // Artist Stats
     let tempArtistStats = new Map<string, ArtistStats>()
     let tempTrackStats = new Map<string, TrackStats>()
 
-    // Song Stats
     library = library.filter((track: Track) => (new Date(track.endTime) >= this.graphControls.dateMin) && (new Date(track.endTime) <= this.graphControls.dateMax))
     library.forEach(track => {
       let skip: boolean = track.msPlayed < 5000
@@ -85,7 +80,6 @@ export class SongStatsService implements OnInit{
         totalSkips = totalSkips + 1;
       }
 
-      // Artist Stats
       if (!tempArtistStats.has(track.artistName)){
         tempArtistStats.set(track.artistName, {
           "name": track.artistName,
@@ -102,8 +96,6 @@ export class SongStatsService implements OnInit{
           "totalSkips": tempArtistStat.totalSkips + (skip ? 1 : 0),
         })
       }
-
-      // Track Stats
 
       if (!tempTrackStats.has(track.trackName)){
         tempTrackStats.set(track.trackName, {
